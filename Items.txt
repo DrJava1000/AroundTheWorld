@@ -1,0 +1,16 @@
+1
+GreenHerb
+Herb that restores partial health.
+3
+2
+HandgunAmmo
+A box of 9mm rounds. 
+10
+3
+CombatKnife
+This doesn't seem to be enough for this mission.
+4
+4
+Emerald
+Although small in size, a precious gem.
+7

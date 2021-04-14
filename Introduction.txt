@@ -1,0 +1,7 @@
+Resident Evil 1: Text Game 
+Welcome. You can proceed through the Spencer Mansion based on cardinal directions with 'move'.
+You can view, pick up and drop items with inspect, get and remove but you are limited 
+to movement and item operations alone.
+Commands, directions, and items are typed out and aren't case sensitive(eg. NORTH, north, NoRTh). 
+Enter exit to quit the game when you are done. 
+

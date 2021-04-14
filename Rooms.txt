@@ -1,0 +1,97 @@
+1
+Mansion Entrance
+You stand before the entrance of a grand mansion. 
+There are colorful gardens to the left and right and there is a gate to the south. 
+Marble double doors stand right in front of you.
+----
+NORTH 2
+----
+2
+Main Hall
+You are standing in the main hall of the mansion. 
+A wide chandelier hangs above a central stairwell leading to the second floor. 
+----
+NORTH 12
+SOUTH 1
+EAST 4
+WEST 3
+----
+3
+West Dining Room
+The west dining room holds a long central table filled with pasteries of all kinds. 
+The top of the room holds a burning fireplace. 
+----
+NORTH 6
+EAST 2
+WEST 5
+----
+4
+East Dining Room
+The east dining room sports a long and empty central tables with two long chairs at each end. 
+----
+NORTH 9
+EAST 11
+WEST 2
+----
+5
+Greenhouse
+You enter a greenhouse that's flourishing with all kinds of fauna. 
+While there are many sights to see, there are no other exits. 
+----
+EAST 3
+----
+6
+West Hallway
+A hallwall with peeling yellow wallpaper. 
+Across, two double doors stand. 
+While the atmosphere is dark, a bright light does show from your left. 
+----
+WEST 8
+SOUTH 3
+NORTH 7
+----
+7
+Library
+Shelves lined with many fiction and non-fiction books. 
+A bright chandelier illuminates the two-story room sanctuary but the side stairwell has collapsed. 
+There is a door to your left. 
+----
+SOUTH 6
+WEST 8
+----
+8
+Wide Hallway
+Brightened by the sun's shine through a large vertical window, this hallway is a favorite reading spot with a small nightstand and comfy couch. 
+----
+SOUTH 6
+EAST 7
+----
+9
+Storage Room
+A dusty room is filled with all kinds of antique knick-knacks. 
+There doesn't seem to be anything of use here though. 
+----
+SOUTH 4
+----
+10
+Bathroom
+It's a bathroom. There is a toilet, sink, and a shower and bathtub. Nothing of interest. Turn back. 
+----
+WEST 11
+----
+11
+East Hallway
+Contradictory to the hallway to the west, this hallway's wallpaper is brand new. 
+Though, why does the hallway come to a dead end? Nevertheless, there is a door across the way.
+----
+EAST 10
+WEST 4
+----
+12
+Disco Room
+Coming off the main stairs, the disco room provides an enjoyable experience with all manner of flashing lights. 
+While unoccupied, the music stills play all night everyday. You can only go back from here.   
+----
+SOUTH 2
+----
+
