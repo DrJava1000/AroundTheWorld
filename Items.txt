@@ -1,16 +1,20 @@
 1
-GreenHerb
-Herb that restores partial health.
-3
+Shotgun
+Smoothbore shoulder weapon designed to fire a number of pellets or shot.
+20
 2
-HandgunAmmo
-A box of 9mm rounds. 
-10
+Flamethrower
+A device that expels from a nozzle a burning stream of liquid or semiliquid fuel under pressure.
+25
 3
-CombatKnife
-This doesn't seem to be enough for this mission.
+Sword
+A bladed melee weapon intended for cutting or thrusting that is longer than a knife or dagger, consisting of a long blade attached to a hilt.
+10
 4
-4
-Emerald
-Although small in size, a precious gem.
-7
+Anti-Spell Potion
+Gives immunity to magically spell for 15 seconds.
+3
+5
+Purifying Potion
+A potion that can remove up to three different types of attacks/spells at the same time.
+15
