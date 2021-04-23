@@ -1,0 +1,7 @@
+Must input the exact words that are displayed to move forward. 
+Ex: typing “N” is not the same as “North"
+Can only defeat monsters by using corresponding weapons. 
+Can revisit any room to collect items.
+Try to use tips to solve puzzles by entering "TIP"
+Can save the process before going to a room by entering "SAVE"
+Can quit anytime during the game by entering “x"
