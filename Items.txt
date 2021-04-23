@@ -11,10 +11,10 @@ Sword
 A bladed melee weapon intended for cutting or thrusting that is longer than a knife or dagger, consisting of a long blade attached to a hilt.
 10
 4
-Anti-Spell Potion
+AntiSpellPotion
 Gives immunity to magically spell for 15 seconds.
 3
 5
-Purifying Potion
+PurifyingPotion
 A potion that can remove up to three different types of attacks/spells at the same time.
 15
