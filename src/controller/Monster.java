@@ -16,11 +16,15 @@ package controller;
 public class Monster 
 {
 	private int monsterID;
+	private String monsterName;
+	private String monsterDescription;
 	private Item weakness;
 	private String tip;
-	private String defeated;
+	private boolean defeated;
 	private String wrongItemChoice;
 	private String rightItemChoice;
+
+
 	
 	public Monster()
 	{
@@ -37,7 +41,29 @@ public class Monster
 	public void setMonsterID(int monsterID) {
 		this.monsterID = monsterID;
 	}
+	
+	
+	public String getMonsterName() {
+		return monsterName;
+	}
 
+
+
+	public void setMonsterName(String monsterName) {
+		this.monsterName = monsterName;
+	}
+
+
+
+	public String getMonsterDescription() {
+		return monsterDescription;
+	}
+
+
+
+	public void setMonsterDescription(String monsterDescription) {
+		this.monsterDescription = monsterDescription;
+	}
 
 
 	/**
@@ -72,21 +98,24 @@ public class Monster
 		this.tip = tip;
 	}
 
+
 	/**
 	 * @return the defeated
 	 */
-	public String getDefeated() 
-	{
+	public boolean isDefeated() {
 		return defeated;
 	}
+
+
 
 	/**
 	 * @param defeated the defeated to set
 	 */
-	public void setDefeated(String defeated) 
-	{
+	public void setDefeated(boolean defeated) {
 		this.defeated = defeated;
 	}
+
+
 
 	/**
 	 * @return the wrongItemChoice
