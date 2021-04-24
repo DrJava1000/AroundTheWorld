@@ -1,39 +1,34 @@
-Monster 1
-Room 23
+1
 Bear
-Description: A huge white Russian bear appears. It terrorizes the village for years.
-Tip: It is dangerous to fight him in close-range. The Japanese shotgun could defeat him.
-Wrong Item Choice: Wrong choice, they bear runs to you and slashes you with his claw. Health: -10
+A huge white Russian bear appears. It terrorizes the village for years.
+It is dangerous to fight him in close-range. The Japanese shotgun could defeat him.
+Wrong choice, they bear runs to you and slashes you with his claw. Health: -10
 Right Item Choice: You take out the shotgun and shoot, you miss, but scare away the Russian bear. You see him run away into the distance. Score +10
 
-Monster 2
-Room 29
+2
 Mummy
-Description: A 3000-year-old mummy appears. Melee attacks cannot kill him. He can reattach the linen to protect his body.
-Tip: Use the flamethrower you saw in San Francisco.
-Wrong Item Choice: Wrong choice, the Mummy seem to be unharmed and hits you with his sturdy linen. Health: -10
-Right Item Choice: You take out the flamethrower and shoot, after a couple seconds you stop and just see a pile of ash on the ground. Score +10
+A 3000-year-old mummy appears. Melee attacks cannot kill him. He can reattach the linen to protect his body.
+Use the flamethrower you saw in San Francisco.
+Wrong choice, the Mummy seem to be unharmed and hits you with his sturdy linen. Health: -10
+You take out the flamethrower and shoot, after a couple seconds you stop and just see a pile of ash on the ground. Score +10
 
-Monster 3
-Room 5
+3
 Wizard
-Description: A wizard who can neutralize any physical attacks by his magic appears.
-Tip: The anti-spell potion you got in Rome might work.
-Wrong Item Choice: Wrong choice, the wizard is unharmed and throws a small fire spell to you. Health: -10
-Right Item Choice: You take and throw the anti-spell potion at the wizard, the wizard tries to cast magic but fails, does not know what to do but run away. Score +10
+A wizard who can neutralize any physical attacks by his magic appears.
+The anti-spell potion you got in Rome might work.
+Wrong choice, the wizard is unharmed and throws a small fire spell to you. Health: -10
+You take and throw the anti-spell potion at the wizard, the wizard tries to cast magic but fails, does not know what to do but run away. Score +10
 
-Monster 4
-Room 17
+4
 Sewage Monster
-Description: A sewage monster that escaped from a lab appears. It lives in the sewage system under the city. He gets his strength from the toxic sewage.
-Tip: Try the purifying potion you picked up in Chicago.
-Wrong Item Choice: Wrong choice, the sewage monster is unharmed and spits sewage at you. Health: -10
-Right Item Choice: You take and throw the purifying potion at the sewage monster; you see the sewage dissolve back into the rest and flows away. Score +10
+A sewage monster that escaped from a lab appears. It lives in the sewage system under the city. He gets his strength from the toxic sewage.
+Try the purifying potion you picked up in Chicago.
+Wrong choice, the sewage monster is unharmed and spits sewage at you. Health: -10
+You take and throw the purifying potion at the sewage monster; you see the sewage dissolve back into the rest and flows away. Score +10
 
-Monster 5
-Room 12
+5
 Crocodile
-Description: A giant crocodile that eats anyone who tries to cross the river appears.
-Tip: Remember that sword that you saw in Mexico City?
-Wrong Item Choice: Wrong choice, the crocodile is unharmed and slaps you with his tail. Health: -10
-Right Item Choice: You take out the sword, you notice something the crocodile seem worried, you slash the sword, and the crocodile runs back into the water and you see him no longer. Score +10
+A giant crocodile that eats anyone who tries to cross the river appears.
+Remember that sword that you saw in Mexico City?
+Wrong choice, the crocodile is unharmed and slaps you with his tail. Health: -10
+You take out the sword, you notice something the crocodile seem worried, you slash the sword, and the crocodile runs back into the water and you see him no longer. Score +10
