@@ -1,3 +1,6 @@
+package controller;
+
+
 /**	Class: Monster
  * @author Ashley
  * @version 1
@@ -9,17 +12,33 @@
  * Purpose - to be read from the Model
  */
 
+
 public class Monster 
 {
+	private int monsterID;
 	private Item weakness;
 	private String tip;
 	private String defeated;
 	private String wrongItemChoice;
 	private String rightItemChoice;
 	
-	Monster()
+	public Monster()
 	{
 	}
+	
+	
+
+	public int getMonsterID() {
+		return monsterID;
+	}
+
+
+
+	public void setMonsterID(int monsterID) {
+		this.monsterID = monsterID;
+	}
+
+
 
 	/**
 	 * @return the weakness
