@@ -7,6 +7,8 @@ import java.util.Scanner;
 
 import controller.Exit;
 import controller.Item;
+import controller.Monster;
+import controller.Puzzle;
 import controller.Room;
 import gameExceptions.InvalidFileException;
 
@@ -107,11 +109,17 @@ public class MapModel
 		String roomName = ""; 
 		ArrayList<String> descriptionArr; 
 		ArrayList<Exit> exits; 
+		ArrayList<Item> items;
+		Monster monster;
+		Puzzle puzzle;
 		
 		while(roomsParser.hasNext())
 		{
 			exits = new ArrayList<Exit>(); 
 			descriptionArr = new ArrayList<String>(); 
+			items = new ArrayList<>();
+			monster = new Monster();
+			puzzle = new Puzzle();
 			
 			roomID = roomsParser.nextInt(); 
 			roomsParser.nextLine(); 
@@ -138,12 +146,25 @@ public class MapModel
 				exits.add(currentExit);
 				currentLine = roomsParser.nextLine(); 
 			}
+			//read room items
+			while(!currentLine.equals("----")) {
+				Item currentItem = new Item();
+				currentLine = roomsParser.nextLine();
+				int itemID = Integer.parseInt(currentLine);
+				
+			}
+			
+			//read room puzzle
+			//read room monster
+			
 				
 			// update already existing room or create new room 
+			
 			Room currentRoom = getRoom(roomID); 
 			currentRoom.setName(roomName);
 			currentRoom.buildDescription(descriptionArr);
 			currentRoom.setExits(exits); 
+			currentRoom.setItems(items);
 			rooms.add(currentRoom);
 		}
 					
@@ -201,6 +222,7 @@ public class MapModel
 		
 		itemsParser.close(); 
 	}	
+	
 	
 	/** Method: getGameIntroduction
 	  * 

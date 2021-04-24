@@ -18,6 +18,8 @@ public class Room
 	private String description;
 	private ArrayList<Exit> roomExits = new ArrayList<Exit>(); 
 	private ArrayList<Item> roomItems = new ArrayList<Item>(); 
+	private Puzzle puzzle = new Puzzle();
+	private Monster monster = new Monster();
 	private boolean visitedStatus; 
 	
 	/** Constructor: Room
@@ -297,6 +299,24 @@ public class Room
 		return roomItems; 
 	}
 	
+	
+	
+	public Puzzle getPuzzle() {
+		return puzzle;
+	}
+
+	public void setPuzzle(Puzzle puzzle) {
+		this.puzzle = puzzle;
+	}
+
+	public Monster getMonster() {
+		return monster;
+	}
+
+	public void setMonster(Monster monster) {
+		this.monster = monster;
+	}
+
 	/** Method: toString
 	  * 
 	  * This method is a wrapper for displayFullRoom(). 
