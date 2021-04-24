@@ -13,6 +13,7 @@ package controller;
 public class Puzzle 
 {
 	private int puzzleID;
+	private boolean isSolved;
 	private String problem;
 	private String answer;
 	private String tip;
@@ -40,6 +41,24 @@ public class Puzzle
 	 */
 	public void setPuzzleID(int puzzleID) {
 		this.puzzleID = puzzleID;
+	}
+
+
+
+	/**
+	 * @return the isSolved
+	 */
+	public boolean isSolved() {
+		return isSolved;
+	}
+
+
+
+	/**
+	 * @param isSolved the isSolved to set
+	 */
+	public void setSolved(boolean isSolved) {
+		this.isSolved = isSolved;
 	}
 
 
