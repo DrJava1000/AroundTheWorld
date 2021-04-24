@@ -1,15 +1,20 @@
 1
 Shotgun
 Smoothbore shoulder weapon designed to fire a number of pellets or shot.
+20
 2
 Flamethrower
 A device that expels from a nozzle a burning stream of liquid or semiliquid fuel under pressure.
+25
 3
 Sword
 A bladed melee weapon intended for cutting or thrusting that is longer than a knife or dagger, consisting of a long blade attached to a hilt.
+10
 4
 AntiSpellPotion
 Gives immunity to magically spell for 15 seconds.
+3
 5
 PurifyingPotion
 A potion that can remove up to three different types of attacks/spells at the same time.
+15
