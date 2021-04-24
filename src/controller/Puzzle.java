@@ -12,6 +12,7 @@ package controller;
 
 public class Puzzle 
 {
+	private int puzzleID;
 	private String problem;
 	private String answer;
 	private String tip;
@@ -22,6 +23,26 @@ public class Puzzle
 	{
 		
 	}
+
+	
+	
+	/**
+	 * @return the puzzleID
+	 */
+	public int getPuzzleID() {
+		return puzzleID;
+	}
+
+
+
+	/**
+	 * @param puzzleID the puzzleID to set
+	 */
+	public void setPuzzleID(int puzzleID) {
+		this.puzzleID = puzzleID;
+	}
+
+
 
 	/**
 	 * @return the problem

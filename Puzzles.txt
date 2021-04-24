@@ -1,65 +1,50 @@
-Puzzle 1
-Room 2
-Problem: What is 6 / (2 x (1 + 2))?
-Answer: 1
-Tip: PEMDAS -Parentheses, Exponents, Multiplication and Division (from left to right), Addition and Subtraction (from left to right).
-
-Puzzle 2
-Room 13
-Problem: What is (7 + 24) / (8 x 5 - 9)?
-Answer: 1
-Tip: PEMDAS -Parentheses, Exponents, Multiplication and Division (from left to right), Addition and Subtraction (from left to right).
-
-puzzle 3
-room 4
-Problem: Unscramble the following letters: liujus arecas
-Answer: Julius Caesar
-Tip: A Roman General
-
-puzzle 4
-room 9
-Problem: Unscrambled the following letters: panshis
-Answer: Spanish
-Tip: A Language
-
-puzzle 5
-puzzle 26
-Riddle: If you drop me, I’m sure to crack but give me a smile and I’ll always smile back. What am I?
-Answer: Mirror
-Tip: Reflective surface
-
-puzzle 6
-room 19
-Riddle: People make me, save me, change me, raise me. What am I?
-Answer: Money
-Tip: Something people work for
-
-puzzle 7
-room 7
-Question: Which word is the correct spelling?
-Options:
-A. concencus			C. concensus
-B. consencus			D. consensus
-Answer: consensus
-Tip: consencus is not spelled correctly.
-
-puzzle 8
-room 16
-Question: Which word is the correct spelling?
-Options:
-A. bureacracy			C. bureaucracy
-B. buraecracy			D. bureuacracy
-Answer: bureaucracy
-Tip: bureuacracy is not spelled correctly.
-
-puzzle 9
-room 19
-Question: The highest mountains in Japan are the Japanese Andes.
-Answer: False
-Tip: Is it True or False?
-
-puzzle 10
-room 21
-Question: Rio de Janeiro is the capital of Brazil.
-Answer: False
-Tip: Is it True or False?
+1
+2
+What is 6 / (2 x (1 + 2))?
+1
+PEMDAS -Parentheses, Exponents, Multiplication and Division (from left to right), Addition and Subtraction (from left to right).
+2
+13
+What is (7 + 24) / (8 x 5 - 9)?
+ 1
+PEMDAS -Parentheses, Exponents, Multiplication and Division (from left to right), Addition and Subtraction (from left to right).
+3
+4
+Unscramble the following letters: liujus arecas
+Julius Caesar
+A Roman General
+4
+9
+Unscramble the following letters: panshis
+Spanish
+A Language
+5
+26
+If you drop me, I’m sure to crack but give me a smile and I’ll always smile back. What am I?
+Mirror
+Reflective surface
+6
+19
+People make me, save me, change me, raise me. What am I?
+Money
+Something people work for
+7
+7
+Which word is the correct spelling?  A. concencus B. consencus C. concensus D. consensus
+D
+consencus is not spelled correctly.
+8
+16
+Which word is the correct spelling?  A. bureacracy B. buraecracy	C. bureaucracy D. bureuacracy
+C
+bureuacracy is not spelled correctly.
+9
+19
+The highest mountains in Japan are the Japanese Andes.
+False
+Is it True or False?
+10
+21
+Rio de Janeiro is the capital of Brazil.
+False
+Is it True or False?

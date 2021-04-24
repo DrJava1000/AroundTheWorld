@@ -30,6 +30,8 @@ public class MapModel
 	private File introFile; 
 	private File roomsFile; 
 	private File itemsFile; 
+	private File monstersFile;
+	private File puzzlesFile;
 	
 	/** Constructor: MapModel
 	  * 
@@ -42,6 +44,8 @@ public class MapModel
 		introFile = new File("Introduction.txt"); 
 		roomsFile = new File("Rooms.txt");
 		itemsFile = new File("Items.txt"); 
+		monstersFile = new File("Monsters.txt");
+		puzzlesFile = new File("Puzzles.txt");
 		
 		gameIntroduction = ""; 
 		rooms = new ArrayList<Room>(); 
@@ -58,6 +62,8 @@ public class MapModel
 	{
 		readRooms(); 
 		readItems(); 
+		readMonsters();
+		readPuzzles();
 		readGameIntroduction(); 
 	}
 	
@@ -110,16 +116,12 @@ public class MapModel
 		String description; 
 		ArrayList<Exit> exits; 
 		ArrayList<Item> items;
-		Monster monster;
-		Puzzle puzzle;
+
 		
 		while(roomsParser.hasNext())
 		{
 			exits = new ArrayList<Exit>(); 
-			items = new ArrayList<>();
-			monster = new Monster();
-			puzzle = new Puzzle();
-			
+			items = new ArrayList<>();			
 			roomID = Integer.parseInt(roomsParser.nextLine()); 
 			roomName = roomsParser.nextLine(); 
 			
@@ -207,6 +209,110 @@ public class MapModel
 		itemsParser.close(); 
 	}	
 	
+	private void readMonsters() throws InvalidFileException 
+	{
+		Scanner monsterParser = null;
+		try
+		{
+			monsterParser = new Scanner(monstersFile); 
+		}catch(FileNotFoundException fileErr)
+		{
+			throw new InvalidFileException("The monsters file \"" + monstersFile.getAbsolutePath() + "\" couldn't be found.");
+		}
+		
+		int monsterID = 0;
+		String monsterName = "";
+		String description = "";
+		String tip = "";
+		String wrongChoice = "";
+		String rightChoice = "";
+		int initialRoom = 0;
+		
+		while(monsterParser.hasNext())
+		{
+			// fetch monsterID on first line
+			monsterID = monsterParser.nextInt();
+			monsterParser.nextLine();
+			
+			//fetch monster name on second line
+			monsterName = monsterParser.nextLine();
+			
+			//fetch monster description on thrid line
+			description = monsterParser.nextLine();
+			
+			//fetch monter tip
+			tip = monsterParser.nextLine();
+			
+			//fetch monster wrong choice
+			wrongChoice = monsterParser.nextLine();
+			
+			//fetch right choice
+			rightChoice = monsterParser.nextLine();
+			
+			//fetch initial room
+			initialRoom = monsterParser.nextInt();
+			
+			Monster currentMonster = new Monster();
+			currentMonster.setMonsterID(monsterID);
+			currentMonster.setMonsterName(monsterName);
+			currentMonster.setMonsterDescription(description);
+			currentMonster.setWrongItemChoice(wrongChoice);
+			currentMonster.setRightItemChoice(rightChoice);
+			currentMonster.setTip(tip);
+			
+			
+			getRoom(initialRoom).setMonster(currentMonster);
+			
+			//validates monsters added to rooms, only used for testing purposes
+			//System.out.println("Monster: " + currentMonster.getMonsterName() + " added to Room " + getRoom(initialRoom).getName());
+		}
+		monsterParser.close();
+	}
+	
+	private void readPuzzles() throws InvalidFileException
+	{
+		Scanner puzzleParser = null;
+		
+		try
+		{
+			puzzleParser = new Scanner(puzzlesFile); 
+		}catch(FileNotFoundException fileErr)
+		{
+			throw new InvalidFileException("The monsters file \"" + puzzlesFile.getAbsolutePath() + "\" couldn't be found.");
+		}
+		
+		int puzzleID = 0;
+		int roomID;
+		String problem;
+		String answer;
+		String tip;
+		
+		while(puzzleParser.hasNext())
+		{
+			puzzleID = puzzleParser.nextInt();
+			puzzleParser.nextLine();
+			
+			roomID = puzzleParser.nextInt();
+			puzzleParser.nextLine();
+			
+			problem = puzzleParser.nextLine();
+			answer = puzzleParser.nextLine();
+			tip = puzzleParser.nextLine();
+			
+			Puzzle currentPuzzle = new Puzzle();
+			currentPuzzle.setPuzzleID(puzzleID);
+			currentPuzzle.setProblem(problem);
+			currentPuzzle.setAnswer(answer);
+			currentPuzzle.setTip(tip);
+			
+			getRoom(roomID).setPuzzle(currentPuzzle);
+			
+			System.out.println("Puzzle " + currentPuzzle.getPuzzleID() + " added to Room " + getRoom(roomID).getName());
+			
+		}
+		
+		puzzleParser.close();
+	}
 	
 	/** Method: getGameIntroduction
 	  * 
