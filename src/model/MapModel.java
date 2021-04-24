@@ -107,7 +107,7 @@ public class MapModel
 		
 		int roomID = 0; 
 		String roomName = ""; 
-		ArrayList<String> descriptionArr; 
+		String description; 
 		ArrayList<Exit> exits; 
 		ArrayList<Item> items;
 		Monster monster;
@@ -116,27 +116,21 @@ public class MapModel
 		while(roomsParser.hasNext())
 		{
 			exits = new ArrayList<Exit>(); 
-			descriptionArr = new ArrayList<String>(); 
 			items = new ArrayList<>();
 			monster = new Monster();
 			puzzle = new Puzzle();
 			
-			roomID = roomsParser.nextInt(); 
-			roomsParser.nextLine(); 
+			roomID = Integer.parseInt(roomsParser.nextLine()); 
 			roomName = roomsParser.nextLine(); 
 			
 			// build description and store in temp list
-			String currentLine; 
-			do
-			{
-				currentLine = roomsParser.nextLine(); 
-				descriptionArr.add(currentLine); 
-			}while(!currentLine.equals("----")); 
-				descriptionArr.remove(descriptionArr.size() - 1); 
+			description = roomsParser.nextLine(); 
 			
 			// build individual exits and store in temp list 
 			Exit currentExit;
+			String currentLine;
 			
+			roomsParser.nextLine();
 			currentLine = roomsParser.nextLine();
 			while(!currentLine.equals("----"))
 			{
@@ -146,23 +140,13 @@ public class MapModel
 				exits.add(currentExit);
 				currentLine = roomsParser.nextLine(); 
 			}
-			//read room items
-			while(!currentLine.equals("----")) {
-				Item currentItem = new Item();
-				currentLine = roomsParser.nextLine();
-				int itemID = Integer.parseInt(currentLine);
-				
-			}
-			
-			//read room puzzle
-			//read room monster
 			
 				
 			// update already existing room or create new room 
 			
 			Room currentRoom = getRoom(roomID); 
 			currentRoom.setName(roomName);
-			currentRoom.buildDescription(descriptionArr);
+			currentRoom.setDescription(description);
 			currentRoom.setExits(exits); 
 			currentRoom.setItems(items);
 			rooms.add(currentRoom);
