@@ -13,6 +13,7 @@ package controller;
  */
 
 
+
 public class Monster 
 {
 	private int monsterID;

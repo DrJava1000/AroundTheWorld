@@ -10,6 +10,7 @@
  */
 package controller;
 
+
 public class Puzzle 
 {
 	private int puzzleID;

@@ -265,6 +265,7 @@ public class MapModel
 		puzzleParser.close();
 	}
 	
+	
 	/** Method: getFirstRoom
 	  * 
 	  * This method gets the first room of the map. This room is
