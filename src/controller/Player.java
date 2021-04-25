@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class Player 
 {
 	private ArrayList<Item> inventory; 
+	private int healthPoints;
 	
 	/** Constructor: Player
 	  * 
@@ -80,5 +81,19 @@ public class Player
 	public ArrayList<Item> getInventory()
 	{
 		return inventory; 
+	}
+
+	/**
+	 * @return the healthPoints
+	 */
+	public int getHealthPoints() {
+		return healthPoints;
+	}
+
+	/**
+	 * @param healthPoints the healthPoints to set
+	 */
+	public void setHealthPoints(int healthPoints) {
+		this.healthPoints = healthPoints;
 	}
 }
