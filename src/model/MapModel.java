@@ -367,7 +367,6 @@ public class MapModel
 				newMonster.setWrongChoice(monsterResult.getString("IncorrectDefenseItemResponse"));
 				newMonster.setTip(monsterResult.getString("Tip"));
 				newMonster.setDefeated(monsterResult.getBoolean("isDefeated"));
-				newMonster.setRoomID(roomID);
 			}
 		} catch (SQLException e) 
 		{
@@ -393,7 +392,6 @@ public class MapModel
 				newPuzzle.setAnswer(puzzleResult.getString("Answer"));
 				newPuzzle.setTip(puzzleResult.getString("Tip"));
 				newPuzzle.setSolved(puzzleResult.getBoolean("isCompleted"));
-				newPuzzle.setRoomID(roomID);
 			}
 		} catch (SQLException e) 
 		{

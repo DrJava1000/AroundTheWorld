@@ -18,7 +18,7 @@ public class Puzzle
 	private String answer;
 	private String tip;
 	private String WRONG_ANSWER;
-	private String correctAnswer;
+	private String correctAnswer; 
 	
 	public Puzzle()
 	{
