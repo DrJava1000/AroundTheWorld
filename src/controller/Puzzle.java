@@ -10,6 +10,7 @@
  */
 package controller;
 
+
 public class Puzzle 
 {
 	private int puzzleID;
@@ -19,6 +20,7 @@ public class Puzzle
 	private String tip;
 	private final String WRONG_ANSWER;
 	private String correctAnswer;
+
 	
 	public Puzzle()
 	{

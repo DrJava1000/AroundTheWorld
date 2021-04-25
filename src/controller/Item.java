@@ -5,6 +5,7 @@ public class Item
 	private int itemID;
 	private String itemName; 
 	private String itemDesc; 
+	private int roomID; 
 	
 	public Item()
 	{
@@ -53,5 +54,13 @@ public class Item
 	public String toString()
 	{
 		return display();
+	}
+
+	public int getRoomID() {
+		return roomID;
+	}
+
+	public void setRoomID(int roomID) {
+		this.roomID = roomID;
 	} 
 }

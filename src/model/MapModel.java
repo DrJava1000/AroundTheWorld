@@ -265,6 +265,7 @@ public class MapModel
 		puzzleParser.close();
 	}
 	
+	
 	/** Method: getFirstRoom
 	  * 
 	  * This method gets the first room of the map. This room is
@@ -367,7 +368,6 @@ public class MapModel
 				newMonster.setWrongChoice(monsterResult.getString("IncorrectDefenseItemResponse"));
 				newMonster.setTip(monsterResult.getString("Tip"));
 				newMonster.setDefeated(monsterResult.getBoolean("isDefeated"));
-				newMonster.setRoomID(roomID);
 			}
 		} catch (SQLException e) 
 		{
@@ -393,7 +393,6 @@ public class MapModel
 				newPuzzle.setAnswer(puzzleResult.getString("Answer"));
 				newPuzzle.setTip(puzzleResult.getString("Tip"));
 				newPuzzle.setSolved(puzzleResult.getBoolean("isCompleted"));
-				newPuzzle.setRoomID(roomID);
 			}
 		} catch (SQLException e) 
 		{

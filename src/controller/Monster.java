@@ -13,6 +13,7 @@ package controller;
  */
 
 
+
 public class Monster 
 {
 	private int monsterID;
@@ -23,7 +24,6 @@ public class Monster
 	private boolean defeated;
 	private String wrongChoice;
 	private String rightChoice;
-
 
 	
 	public Monster()
@@ -111,10 +111,10 @@ public class Monster
 
 
 	/**
-	 * @param wrongChoice the wrongChoice to set
+	 * @param i the wrongChoice to set
 	 */
-	public void setWrongChoice(String wrongChoice) {
-		this.wrongChoice = wrongChoice;
+	public void setWrongChoice(String i) {
+		this.wrongChoice = i;
 	}
 
 
@@ -152,7 +152,4 @@ public class Monster
 	public void setRightItemChoice(int rightItemChoice) {
 		this.rightItemChoice = rightItemChoice;
 	}
-
-	
-	
 }
