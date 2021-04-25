@@ -18,11 +18,11 @@ public class Monster
 	private int monsterID;
 	private String monsterName;
 	private String monsterDescription;
-	private Item weakness;
+	private int rightItemChoice;
 	private String tip;
 	private boolean defeated;
-	private String wrongItemChoice;
-	private String rightItemChoice;
+	private String wrongChoice;
+	private String rightChoice;
 
 
 	
@@ -67,22 +67,6 @@ public class Monster
 
 
 	/**
-	 * @return the weakness
-	 */
-	public Item getWeakness() 
-	{
-		return weakness;
-	}
-
-	/**
-	 * @param weakness the weakness to set
-	 */
-	public void setWeakness(Item weakness)
-	{
-		this.weakness = weakness;
-	}
-
-	/**
 	 * @return the tip
 	 */
 	public String getTip()
@@ -118,36 +102,57 @@ public class Monster
 
 
 	/**
-	 * @return the wrongItemChoice
+	 * @return the wrongChoice
 	 */
-	public String getWrongItemChoice()
-	{
-		return wrongItemChoice;
+	public String getWrongChoice() {
+		return wrongChoice;
 	}
 
+
+
 	/**
-	 * @param wrongItemChoice the wrongItemChoice to set
+	 * @param wrongChoice the wrongChoice to set
 	 */
-	public void setWrongItemChoice(String wrongItemChoice)
-	{
-		this.wrongItemChoice = wrongItemChoice;
+	public void setWrongChoice(String wrongChoice) {
+		this.wrongChoice = wrongChoice;
 	}
+
+
+
+	/**
+	 * @return the rightChoice
+	 */
+	public String getRightChoice() {
+		return rightChoice;
+	}
+
+
+
+	/**
+	 * @param rightChoice the rightChoice to set
+	 */
+	public void setRightChoice(String rightChoice) {
+		this.rightChoice = rightChoice;
+	}
+
+
 
 	/**
 	 * @return the rightItemChoice
 	 */
-	public String getRightItemChoice()
-	{
+	public int getRightItemChoice() {
 		return rightItemChoice;
 	}
+
+
 
 	/**
 	 * @param rightItemChoice the rightItemChoice to set
 	 */
-	public void setRightItemChoice(String rightItemChoice)
-	{
+	public void setRightItemChoice(int rightItemChoice) {
 		this.rightItemChoice = rightItemChoice;
 	}
+
 	
 	
 }
