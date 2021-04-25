@@ -8,6 +8,9 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 import controller.Exit;
+import controller.Item;
+import controller.Monster;
+import controller.Puzzle;
 import controller.Room;
 import gameExceptions.InvalidFileException;
 
@@ -282,16 +285,16 @@ public class MapModel
 	  */
 	public Room getRoom(int roomID)
 	{
-		ResultSet result = gameDB.getRoom(roomID); 
+		ResultSet roomResult = gameDB.getRoom(roomID); 
 		
 		Room newRoom = null; 
 		ArrayList<Exit> exits = new ArrayList<Exit>(); 
 		
 		try 
 		{
-			newRoom = new Room(result.getInt("RoomID")); 
-			newRoom.setName(result.getString("Name"));
-			newRoom.setDescription(result.getString("Description"));
+			newRoom = new Room(roomResult.getInt("RoomID")); 
+			newRoom.setName(roomResult.getString("Name"));
+			newRoom.setDescription(roomResult.getString("Description"));
 	    
 			String [] sqlTableExits = {"NorthExit", "SouthExit", "EastExit", "WestExit"}; 
 			String [] cardinalDirections = {"North", "South", "East", "West"};  
@@ -299,16 +302,105 @@ public class MapModel
 			for(int i = 0; i < 4; i++)
 			{
 				Exit exit = new Exit(); 
-				exit.buildExit(cardinalDirections[i], result.getInt(sqlTableExits[i]));
+				
+				// only build exits where not null
+				if(roomResult.getInt(sqlTableExits[i]) == 0)
+					continue; 
+				
+				exit.buildExit(cardinalDirections[i], roomResult.getInt(sqlTableExits[i]));
 				exits.add(exit); 
 			}
 		}catch(SQLException sqlError)
 		{
-			// throw new Exception
+			// throw new Exception()
 		}
 	    
 	    newRoom.setExits(exits);
-		
+	    newRoom.setItems(getItems(newRoom.getRoomID()));
+	    newRoom.setMonster(getMonster(newRoom.getRoomID())); 
+	    newRoom.setPuzzle(getPuzzle(newRoom.getRoomID())); 
+	    
 		return newRoom; 
+	}
+	
+	private ArrayList<Item> getItems(int roomID)
+	{
+		ResultSet itemsResult = gameDB.getItems(roomID); 
+		
+		ArrayList<Item> items = new ArrayList<Item>(); 
+		
+		try 
+		{
+			while(itemsResult.next())
+			{
+				Item currentItem = new Item(); 
+				currentItem.setItemID(itemsResult.getInt("ItemID"));
+				currentItem.setItemName(itemsResult.getString("Name"));
+				currentItem.setItemDesc(itemsResult.getString("Description"));
+				currentItem.setRoomID(roomID);
+				items.add(currentItem); 
+			}
+		} catch (SQLException e) 
+		{
+			// throw new Exception()
+		}
+		
+		return items; 
+	}
+	
+	private Monster getMonster(int roomID)
+	{
+        ResultSet monsterResult = gameDB.getMonster(roomID); 
+		
+        Monster newMonster = null; 
+        
+		try 
+		{
+			if(monsterResult.next())
+			{
+				newMonster = new Monster(); 
+				newMonster.setMonsterID(monsterResult.getInt("MonsterID"));
+				newMonster.setMonsterName(monsterResult.getString("Name"));
+				newMonster.setMonsterDescription(monsterResult.getString("Description"));
+				newMonster.setRightItemChoice(monsterResult.getInt("CorrectDefenseItem"));
+				newMonster.setRightChoice(monsterResult.getString("CorrectDefenseItemResponse"));
+				newMonster.setWrongChoice(monsterResult.getString("IncorrectDefenseItemResponse"));
+				newMonster.setTip(monsterResult.getString("Tip"));
+				newMonster.setDefeated(monsterResult.getBoolean("isDefeated"));
+				newMonster.setRoomID(roomID);
+			}
+		} catch (SQLException e) 
+		{
+			// throw new Exception()
+		}
+		
+		return newMonster; 
+	}
+	
+	private Puzzle getPuzzle(int roomID)
+	{
+        ResultSet puzzleResult = gameDB.getPuzzle(roomID); 
+		
+        Puzzle newPuzzle = null;
+        
+		try 
+		{
+			if(puzzleResult.next())
+			{
+				newPuzzle = new Puzzle(); 
+				newPuzzle.setPuzzleID(puzzleResult.getInt("PuzzleID"));
+				newPuzzle.setProblem(puzzleResult.getString("Prompt"));
+				newPuzzle.setAnswer(puzzleResult.getString("Answer"));
+				newPuzzle.setTip(puzzleResult.getString("Tip"));
+				newPuzzle.setSolved(puzzleResult.getBoolean("isCompleted"));
+				newPuzzle.setRoomID(roomID);
+			}
+		} catch (SQLException e) 
+		{
+			// throw new Exception()
+		}
+		
+		return newPuzzle; 
+		
 	}
 }
