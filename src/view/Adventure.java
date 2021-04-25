@@ -11,10 +11,9 @@ import gameExceptions.InvalidItemException;
 import gameExceptions.InvalidRoomException;
 
 /**Class: Adventure 
- * @author Ryan Gambrell
- * @version 2.0 
+ * 
  * Course: ITEC 3860 Spring 2021
- * Written: March 21, 2021
+ * 
  * 
  * This class is the main class. It contains the game loop
  * responsible for obtaining user input and passing it to the game controller 
@@ -55,7 +54,6 @@ public class Adventure
 	  */
 	private void playGame()
 	{
-		System.out.println(gc.introduceGame()); 
 		currentRoom = GameController.getMap().getFirstRoom(); 
 		
 		String command = ""; 
@@ -102,17 +100,18 @@ public class Adventure
 	{
 		currentRoom = room; 
 		displayStatus = true; 
-	}
+	} 
 	
 	/** Method: Main
 	  * 
 	  * This is Java's main method and it only serves to start loading
 	  * the game. 
 	  * @param args Java's default command-line arguments
+	 * @throws InvalidFileException 
 	  */
-	public static void main(String[] args) 
+	public static void main(String[] args) throws InvalidFileException 
 	{
-		new Adventure().playGame(); 
+		new Adventure().playGame();
 	}
 
 }

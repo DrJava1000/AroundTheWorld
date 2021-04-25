@@ -4,10 +4,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**Class: Exit
- * @author Ryan Gambrell
- * @version 2.0 
+ * 
  * Course: ITEC 3860 Spring 2021
- * Written: March 21, 2021
+ * 
  * 
  * This class is the Exit class. It is responsible for representing an exit
  * with a cardinal direction and the room it leads to.  

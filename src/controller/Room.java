@@ -3,10 +3,8 @@ package controller;
 import java.util.ArrayList;
 
 /**Class: Room
- * @author Ryan Gambrell
- * @version 2.0 
+ * 
  * Course: ITEC 3860 Spring 2021
- * Written: March 21, 2021
  * 
  * This class encapsulates all the properties and functionality
  * of any given room in the game's map.  
@@ -298,8 +296,6 @@ public class Room
 	{
 		return roomItems; 
 	}
-	
-	
 	
 	public Puzzle getPuzzle() {
 		return puzzle;
