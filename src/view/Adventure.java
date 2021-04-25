@@ -69,6 +69,12 @@ public class Adventure
 			if(!currentRoom.isVisited())
 				currentRoom.setVisited(true);
 			
+			if(currentRoom.getMonster().getMonsterName()!=null)
+				System.out.println(currentRoom.getMonster().getMonsterDescription());
+			
+			if(currentRoom.getPuzzle().getProblem()!=null)
+				System.out.println(currentRoom.getPuzzle().getProblem());
+			
 			System.out.print("\nWhat do you want to do?: "); 
 			command = input.nextLine(); 
 			
