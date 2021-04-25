@@ -103,6 +103,56 @@ public class ATWorldDB
 		return result; 
 	}
 	
+	public ResultSet getItems(int roomID)
+	{
+		ResultSet result; 
+		try 
+		{
+			result = sqlStmt.executeQuery("SELECT * FROM Items"
+					+ " WHERE Location=" + roomID + ";");
+		} catch (SQLException e) 
+		{
+			return null; 
+			// throw new Exception(); 
+		} 
+		
+		return result; 
+	}
+	
+	public ResultSet getMonster(int roomID)
+	{
+		ResultSet result; 
+		try 
+		{
+			result = sqlStmt.executeQuery("SELECT * FROM Monsters"
+					+ " WHERE Location=" + roomID + ";");
+		} catch (SQLException e) 
+		{
+			return null; 
+			// throw new Exception(); 
+		} 
+		
+		return result; 
+	}
+	
+	
+	public ResultSet getPuzzle(int roomID)
+	{
+		ResultSet result; 
+		try 
+		{
+			result = sqlStmt.executeQuery("SELECT * FROM Puzzles"
+					+ " WHERE Location=" + roomID + ";");
+		} catch (SQLException e) 
+		{
+			return null; 
+			// throw new Exception(); 
+		} 
+		
+		return result; 
+	}
+	
+	
 	public void addRoom(int id, String name, String description, ArrayList<Exit> exits)
 	{
 		try 
