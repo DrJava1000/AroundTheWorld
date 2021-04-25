@@ -3,20 +3,18 @@ package model;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 import controller.Exit;
-import controller.Item;
-import controller.Monster;
-import controller.Puzzle;
 import controller.Room;
 import gameExceptions.InvalidFileException;
 
 /**Class: MapModel 
- * @author Ryan Gambrell
- * @version 2.0 
+ * 
  * Course: ITEC 3860 Spring 2021
- * Written: March 21, 2021
+ * 
  * 
  * This class is responsible for the map. Specifically, it is responsible for loading
  * the introduction, the rooms, and items from individual text files while also
@@ -24,10 +22,8 @@ import gameExceptions.InvalidFileException;
 */
 public class MapModel 
 {
-	private ArrayList<Room> rooms; 
-	private ArrayList<Item> items; 
-	private String gameIntroduction; 
-	private File introFile; 
+	private ATWorldDB gameDB; 
+	private File dbFile; 
 	private File roomsFile; 
 	private File itemsFile; 
 	private File monstersFile;
@@ -38,18 +34,29 @@ public class MapModel
 	  * The MapModel constructor is used to select the text files
 	  * that the game should use and it is responsible for initializing 
 	  * the collections use to store items and rooms. 
+	 * @throws InvalidFileException 
 	  */
-	public MapModel()
+	public MapModel() throws InvalidFileException
 	{
-		introFile = new File("Introduction.txt"); 
-		roomsFile = new File("Rooms.txt");
-		itemsFile = new File("Items.txt"); 
-		monstersFile = new File("Monsters.txt");
-		puzzlesFile = new File("Puzzles.txt");
+		dbFile = new File("aroundTheWorld.db");
+		gameDB = new ATWorldDB(dbFile.getName()); 
 		
-		gameIntroduction = ""; 
-		rooms = new ArrayList<Room>(); 
-		items = new ArrayList<Item>(); 
+		// check to see if database already exists 
+		// and create it in working directory 
+		// if it doesn't exist 
+        if(dbFile.exists() == false)
+        {
+        	roomsFile = new File("Rooms.txt");
+        	itemsFile = new File("Items.txt"); 
+        	monstersFile = new File("Monsters.txt");
+        	puzzlesFile = new File("Puzzles.txt");
+        	
+        	gameDB.connectGameDB();
+        	gameDB.buildTables();
+        	
+        	loadGame();  
+        }else
+        	gameDB.connectGameDB(); 
 	}
 	
 	/** Method: loadGame
@@ -58,42 +65,15 @@ public class MapModel
 	  * loading of the map's rooms, the game's items, and the game's introduction 
 	  * from text files. 
 	  */
-	public void loadGame() throws InvalidFileException
+	private void loadGame() throws InvalidFileException
 	{
 		readRooms(); 
 		readItems(); 
 		readMonsters();
 		readPuzzles();
-		readGameIntroduction(); 
 	}
 	
-	/** Method: readGameIntroduction
-	  * 
-	  * This method reads the introduction file and stores it as a
-	  * single formatted string representative of the user's original
-	  * introduction message. 
-	  */
-	private void readGameIntroduction() throws InvalidFileException
-	{
-		Scanner introParser = null; 
-		
-		try
-		{
-			introParser = new Scanner(introFile); 
-		}catch(FileNotFoundException fileErr)
-		{
-			throw new InvalidFileException("The introduction file \"" + introFile.getAbsolutePath() + "\" couldn't be found.");
-		}
-		
-		while(introParser.hasNext())
-		{
-			gameIntroduction += introParser.nextLine() + "\n";
-		}
-		
-		introParser.close(); 
-	}
-	
-	/** Method: Method Name
+	/** Method: readRooms()
 	  * 
 	  * This method reads the rooms file and it generates
 	  * and updates each room with a user-specified id, name, description, 
@@ -114,24 +94,18 @@ public class MapModel
 		int roomID = 0; 
 		String roomName = ""; 
 		String description; 
-		ArrayList<Exit> exits; 
-		ArrayList<Item> items;
+		ArrayList<Exit> exits; 	
 
-		
 		while(roomsParser.hasNext())
 		{
-			exits = new ArrayList<Exit>(); 
-			items = new ArrayList<>();			
+			exits = new ArrayList<Exit>(); 		
 			roomID = Integer.parseInt(roomsParser.nextLine()); 
 			roomName = roomsParser.nextLine(); 
-			
-			// build description and store in temp list
 			description = roomsParser.nextLine(); 
 			
 			// build individual exits and store in temp list 
 			Exit currentExit;
 			String currentLine;
-			
 			roomsParser.nextLine();
 			currentLine = roomsParser.nextLine();
 			while(!currentLine.equals("----"))
@@ -143,15 +117,8 @@ public class MapModel
 				currentLine = roomsParser.nextLine(); 
 			}
 			
-				
-			// update already existing room or create new room 
-			
-			Room currentRoom = getRoom(roomID); 
-			currentRoom.setName(roomName);
-			currentRoom.setDescription(description);
-			currentRoom.setExits(exits); 
-			currentRoom.setItems(items);
-			rooms.add(currentRoom);
+			// add new room 
+			gameDB.addRoom(roomID, roomName, description, exits); 
 		}
 					
 		roomsParser.close(); 
@@ -196,14 +163,8 @@ public class MapModel
 			initialRoom = itemsParser.nextInt(); 
 			itemsParser.nextLine();
 			
-			// update current item or create new one
-			Item currentItem = getItem(itemID); 
-			currentItem.setItemName(itemName);
-			currentItem.setItemDesc(description);
-			items.add(currentItem); 
-				
-			// add each item to the room whose id is listed last 
-			getRoom(initialRoom).addItem(currentItem);
+			// add new item 
+			gameDB.addItem(itemID, itemName, description, initialRoom);
 		}
 		
 		itemsParser.close(); 
@@ -217,15 +178,17 @@ public class MapModel
 			monsterParser = new Scanner(monstersFile); 
 		}catch(FileNotFoundException fileErr)
 		{
-			throw new InvalidFileException("The monsters file \"" + monstersFile.getAbsolutePath() + "\" couldn't be found.");
+			throw new InvalidFileException("The monsters file \"" + monstersFile.getAbsolutePath() + 
+					"\" couldn't be found.");
 		}
 		
 		int monsterID = 0;
 		String monsterName = "";
 		String description = "";
 		String tip = "";
-		String wrongChoice = "";
+		int rightItemChoice; 
 		String rightChoice = "";
+		String wrongChoice = "";
 		int initialRoom = 0;
 		
 		while(monsterParser.hasNext())
@@ -237,11 +200,15 @@ public class MapModel
 			//fetch monster name on second line
 			monsterName = monsterParser.nextLine();
 			
-			//fetch monster description on thrid line
+			//fetch monster description on third line
 			description = monsterParser.nextLine();
 			
-			//fetch monter tip
+			//fetch monster tip
 			tip = monsterParser.nextLine();
+			
+			//fetch correct item to use 
+			rightItemChoice = monsterParser.nextInt(); 
+			monsterParser.nextLine(); 
 			
 			//fetch monster wrong choice
 			wrongChoice = monsterParser.nextLine();
@@ -252,19 +219,8 @@ public class MapModel
 			//fetch initial room
 			initialRoom = monsterParser.nextInt();
 			
-			Monster currentMonster = new Monster();
-			currentMonster.setMonsterID(monsterID);
-			currentMonster.setMonsterName(monsterName);
-			currentMonster.setMonsterDescription(description);
-			currentMonster.setWrongItemChoice(wrongChoice);
-			currentMonster.setRightItemChoice(rightChoice);
-			currentMonster.setTip(tip);
-			
-			
-			getRoom(initialRoom).setMonster(currentMonster);
-			
-			//validates monsters added to rooms, only used for testing purposes
-			//System.out.println("Monster: " + currentMonster.getMonsterName() + " added to Room " + getRoom(initialRoom).getName());
+			gameDB.addMonster(monsterID, monsterName, description, rightItemChoice, 
+					rightChoice, wrongChoice, tip, initialRoom);
 		}
 		monsterParser.close();
 	}
@@ -278,7 +234,8 @@ public class MapModel
 			puzzleParser = new Scanner(puzzlesFile); 
 		}catch(FileNotFoundException fileErr)
 		{
-			throw new InvalidFileException("The monsters file \"" + puzzlesFile.getAbsolutePath() + "\" couldn't be found.");
+			throw new InvalidFileException("The puzzles file \"" + puzzlesFile.getAbsolutePath() + 
+					"\" couldn't be found.");
 		}
 		
 		int puzzleID = 0;
@@ -299,29 +256,21 @@ public class MapModel
 			answer = puzzleParser.nextLine();
 			tip = puzzleParser.nextLine();
 			
-			Puzzle currentPuzzle = new Puzzle();
-			currentPuzzle.setPuzzleID(puzzleID);
-			currentPuzzle.setProblem(problem);
-			currentPuzzle.setAnswer(answer);
-			currentPuzzle.setTip(tip);
-			
-			getRoom(roomID).setPuzzle(currentPuzzle);
-			
-			System.out.println("Puzzle " + currentPuzzle.getPuzzleID() + " added to Room " + getRoom(roomID).getName());
-			
+			gameDB.addPuzzle(puzzleID, problem, answer, tip, roomID);	
 		}
 		
 		puzzleParser.close();
 	}
 	
-	/** Method: getGameIntroduction
+	/** Method: getFirstRoom
 	  * 
-	  * This method gets the game's introduction. 
-	  * @return a formatted String containing the game's introduction 
+	  * This method gets the first room of the map. This room is
+	  * the one that is listed first in the rooms file. 
+	  * @return Room the first (or starting) room in the game
 	  */
-	public String getGameIntroduction()
+	public Room getFirstRoom()
 	{
-		return gameIntroduction; 
+		return getRoom(1);
 	}
 	
 	/** Method: getRoom
@@ -333,62 +282,33 @@ public class MapModel
 	  */
 	public Room getRoom(int roomID)
 	{
-		for(Room currentRoom : rooms)
-		{
-			if(currentRoom.getRoomID() == roomID)
-				return currentRoom; 
-		}
+		ResultSet result = gameDB.getRoom(roomID); 
 		
-		return new Room(roomID); 
-	}
-	
-	/** Method: getAllRooms() 
-	  * 
-	  * This method gets the map's collection of rooms. 
-	  * 
-	  * @return a reference to the MapModel's collection of rooms 
-	  */
-	public ArrayList<Room> getAllRooms()
-	{
-		return rooms; 
-	}
-	
-	/** Method: getFirstRoom
-	  * 
-	  * This method gets the first room of the map. This room is
-	  * the one that is listed first in the rooms file. 
-	  * @return Room the first (or starting) room in the game
-	  */
-	public Room getFirstRoom()
-	{
-		return rooms.get(0);
-	}
-	
-	/** Method: getItem
-	  * 
-	  * This method gets the item that is associated with a specific ID. 
-	  * @param itemID the ID used to identify a specific item
-	  * @return Item the item associated with a specific ID
-	  */
-	public Item getItem(int itemID)
-	{
-		for(Item currentItem : items)
-		{
-			if(currentItem.getItemID() == itemID)
-				return currentItem; 
-		}
+		Room newRoom = null; 
+		ArrayList<Exit> exits = new ArrayList<Exit>(); 
 		
-		return new Item(); 
-	}
-	
-	/** Method: getItems
-	  * 
-	  * This method gets a collection of all the items in a specific room. 
-	  * @param roomID the ID used to identify a specific room
-	  * @return a reference to the collection of items associated with a room
-	  */
-	public ArrayList<Item> getItems(int roomID)
-	{
-		return getRoom(roomID).getItems(); 
+		try 
+		{
+			newRoom = new Room(result.getInt("RoomID")); 
+			newRoom.setName(result.getString("Name"));
+			newRoom.setDescription(result.getString("Description"));
+	    
+			String [] sqlTableExits = {"NorthExit", "SouthExit", "EastExit", "WestExit"}; 
+			String [] cardinalDirections = {"North", "South", "East", "West"};  
+	    
+			for(int i = 0; i < 4; i++)
+			{
+				Exit exit = new Exit(); 
+				exit.buildExit(cardinalDirections[i], result.getInt(sqlTableExits[i]));
+				exits.add(exit); 
+			}
+		}catch(SQLException sqlError)
+		{
+			// throw new Exception
+		}
+	    
+	    newRoom.setExits(exits);
+		
+		return newRoom; 
 	}
 }
