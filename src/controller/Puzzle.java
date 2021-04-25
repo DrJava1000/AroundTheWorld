@@ -17,11 +17,12 @@ public class Puzzle
 	private String problem;
 	private String answer;
 	private String tip;
-	private String WRONG_ANSWER;
+	private final String WRONG_ANSWER;
 	private String correctAnswer;
 	
 	public Puzzle()
 	{
+		this.WRONG_ANSWER = "The answer to the question was incorrect, all of a sudden you feel your life drain a bit.  You lost 5 health points.";
 		
 	}
 
@@ -119,13 +120,6 @@ public class Puzzle
 		return WRONG_ANSWER;
 	}
 
-	/**
-	 * @param wRONG_ANSWER the wRONG_ANSWER to set
-	 */
-	public void setWRONG_ANSWER(String wRONG_ANSWER) 
-	{
-		WRONG_ANSWER = wRONG_ANSWER;
-	}
 
 	/**
 	 * @return the correctAnswer
