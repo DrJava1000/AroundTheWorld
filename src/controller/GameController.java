@@ -1,7 +1,5 @@
 package controller;
 
-import java.util.ArrayList;
-
 import gameExceptions.InvalidCommandException;
 import gameExceptions.InvalidExitException;
 import gameExceptions.InvalidFileException;
@@ -10,10 +8,8 @@ import gameExceptions.InvalidRoomException;
 import model.MapModel;
 
 /**Class: GameController 
- * @author Ryan Gambrell
- * @version 2.0 
+ * 
  * Course: ITEC 3860 Spring 2021
- * Written: March 21, 2021
  * 
  * This class represents the game controller. It is responsible for 
  * initiating the loading of the game map and it serves to pass user 
@@ -33,19 +29,6 @@ public class GameController
 	{
 		commands = new Commands(); 
 		map = new MapModel();
-		map.loadGame(); 
-	}
-	
-	/** Method: introduceGame
-	  * 
-	  * Get the game's introduction (all lines) as a single String with formatting
-	  * taken from the specified text file. 
-	  * 
-	  * @return a single formatted String containing the game's introduction 
-	  */
-	public String introduceGame()
-	{
-		return map.getGameIntroduction(); 
 	}
 	
 	/** Method: getMap
@@ -83,26 +66,5 @@ public class GameController
 	public String executeCommand(String cmd, Room room) throws InvalidCommandException, InvalidExitException, InvalidItemException, InvalidRoomException
 	{
 		return commands.executeCommand(cmd, room); 
-	}
-	
-	/** Method: printMap
-	  * 
-	  * This method gets a single string that contains information
-	  * about every room in the map. This includes each room's id, name, description, exits,
-	  * and included items.  
-	  * @return a single formatted String containing every room's information
-	  */
-	public String printMap()
-	{
-		ArrayList<Room> rooms = new ArrayList<Room>(); 
-		
-		String map = ""; 
-		
-		for(Room currentRoom : rooms)
-		{
-			map += currentRoom.displayItems();  
-		}
-		
-		return map; 
 	}
 }
