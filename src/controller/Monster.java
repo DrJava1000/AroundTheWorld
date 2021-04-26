@@ -1,6 +1,5 @@
 package controller;
 
-
 /**	Class: Monster
  * @author Ashley
  * @version 1
@@ -11,9 +10,6 @@ package controller;
  *
  * Purpose - to be read from the Model
  */
-
-
-
 public class Monster 
 {
 	private int monsterID;
@@ -24,44 +20,42 @@ public class Monster
 	private boolean defeated;
 	private String wrongChoice;
 	private String rightChoice;
-
+	private int roomID; 
 	
-	public Monster()
+	public int getMonsterID() 
 	{
-	}
-	
-	
-
-	public int getMonsterID() {
 		return monsterID;
 	}
 
-
-
-	public void setMonsterID(int monsterID) {
+	public void setMonsterID(int monsterID) 
+	{
 		this.monsterID = monsterID;
 	}
 	
 	
-	public String getMonsterName() {
+	public String getMonsterName() 
+	{
 		return monsterName;
 	}
 
 
 
-	public void setMonsterName(String monsterName) {
+	public void setMonsterName(String monsterName) 
+	{
 		this.monsterName = monsterName;
 	}
 
 
 
-	public String getMonsterDescription() {
+	public String getMonsterDescription() 
+	{
 		return monsterDescription;
 	}
 
 
 
-	public void setMonsterDescription(String monsterDescription) {
+	public void setMonsterDescription(String monsterDescription) 
+	{
 		this.monsterDescription = monsterDescription;
 	}
 
@@ -82,20 +76,28 @@ public class Monster
 		this.tip = tip;
 	}
 
+	/** Method: storeDefeated
+	  * 
+	  * This method stores the fact that the current Player has defeated this monster. 
+	  */
+	public void storeDefeated(Player player)
+	{
+		GameController.getMap().storeDefeated(player, this);
+	}
 
 	/**
 	 * @return the defeated
 	 */
-	public boolean isDefeated() {
+	public boolean isDefeated() 
+	{
 		return defeated;
 	}
-
-
 
 	/**
 	 * @param defeated the defeated to set
 	 */
-	public void setDefeated(boolean defeated) {
+	public void setDefeated(boolean defeated) 
+	{
 		this.defeated = defeated;
 	}
 
@@ -104,7 +106,8 @@ public class Monster
 	/**
 	 * @return the wrongChoice
 	 */
-	public String getWrongChoice() {
+	public String getWrongChoice() 
+	{
 		return wrongChoice;
 	}
 
@@ -113,7 +116,8 @@ public class Monster
 	/**
 	 * @param i the wrongChoice to set
 	 */
-	public void setWrongChoice(String i) {
+	public void setWrongChoice(String i) 
+	{
 		this.wrongChoice = i;
 	}
 
@@ -122,7 +126,8 @@ public class Monster
 	/**
 	 * @return the rightChoice
 	 */
-	public String getRightChoice() {
+	public String getRightChoice() 
+	{
 		return rightChoice;
 	}
 
@@ -131,7 +136,8 @@ public class Monster
 	/**
 	 * @param rightChoice the rightChoice to set
 	 */
-	public void setRightChoice(String rightChoice) {
+	public void setRightChoice(String rightChoice) 
+	{
 		this.rightChoice = rightChoice;
 	}
 
@@ -140,7 +146,8 @@ public class Monster
 	/**
 	 * @return the rightItemChoice
 	 */
-	public int getRightItemChoice() {
+	public int getRightItemChoice() 
+	{
 		return rightItemChoice;
 	}
 
@@ -149,7 +156,16 @@ public class Monster
 	/**
 	 * @param rightItemChoice the rightItemChoice to set
 	 */
-	public void setRightItemChoice(int rightItemChoice) {
+	public void setRightItemChoice(int rightItemChoice) 
+	{
 		this.rightItemChoice = rightItemChoice;
+	}
+
+	public int getRoomID() {
+		return roomID;
+	}
+
+	public void setRoomID(int roomID) {
+		this.roomID = roomID;
 	}
 }

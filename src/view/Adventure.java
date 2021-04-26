@@ -54,7 +54,7 @@ public class Adventure
 	 */
 	private void playGame()
 	{
-		currentRoom = GameController.getMap().getFirstRoom(); 
+		currentRoom = GameController.getMap().getRoom(1); 
 		String command = ""; 
 		displayStatus = true; 
 
