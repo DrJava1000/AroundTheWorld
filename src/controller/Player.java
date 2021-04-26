@@ -10,9 +10,11 @@ import java.util.ArrayList;
  * This class is the player class. It is responsible for managing the player's inventory. 
 */
 public class Player 
-{
-	private ArrayList<Item> inventory; 
-	private int healthPoints;
+{ 
+	private int hp;
+	private int score; 
+	private ArrayList<Item> inventory; // contains a list of roomIDs 
+	private int roomID; 
 	
 	/** Constructor: Player
 	  * 
@@ -32,7 +34,7 @@ public class Player
 	{
 		inventory.add(item); 
 	}
-	
+
 	/** Method: removeItem
 	  * 
 	  * This method removes an item from the player's inventory.
@@ -86,14 +88,30 @@ public class Player
 	/**
 	 * @return the healthPoints
 	 */
-	public int getHealthPoints() {
-		return healthPoints;
+	public int getHP() {
+		return hp;
 	}
 
 	/**
 	 * @param healthPoints the healthPoints to set
 	 */
-	public void setHealthPoints(int healthPoints) {
-		this.healthPoints = healthPoints;
+	public void setHP(int healthPoints) {
+		this.hp = healthPoints;
+	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+	public int getRoomID() {
+		return roomID;
+	}
+
+	public void setRoomID(int roomID) {
+		this.roomID = roomID;
 	}
 }

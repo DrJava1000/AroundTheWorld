@@ -1,15 +1,17 @@
 package model;
 
-import java.util.ArrayList;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException; 
 
 import controller.Exit;
 import controller.Item;
 import controller.Monster;
+import controller.Player;
 import controller.Puzzle;
 import controller.Room;
 import gameExceptions.InvalidFileException;
@@ -19,9 +21,10 @@ import gameExceptions.InvalidFileException;
  * Course: ITEC 3860 Spring 2021
  * 
  * 
- * This class is responsible for the map. Specifically, it is responsible for loading
- * the introduction, the rooms, and items from individual text files while also
- * maintaining a collection of all rooms and items. 
+ * This class facilitates the initialization of the game's database from text files and it acts
+ * as an intermediary component for the database. Database operations are passed along through here
+ * and associated methods are responsible for converting the results of database statements to game-defined
+ * entities. 
 */
 public class MapModel 
 {
@@ -34,10 +37,9 @@ public class MapModel
 	
 	/** Constructor: MapModel
 	  * 
-	  * The MapModel constructor is used to select the text files
-	  * that the game should use and it is responsible for initializing 
-	  * the collections use to store items and rooms. 
-	 * @throws InvalidFileException 
+	  * The MapModel constructor is responsible for facilitating 
+	  * the loading of a current database or the creation and 
+	  * formatting of a new one. 
 	  */
 	public MapModel() throws InvalidFileException
 	{
@@ -65,8 +67,8 @@ public class MapModel
 	/** Method: loadGame
 	  * 
 	  * This method is the all-encompassing method used to initiate the
-	  * loading of the map's rooms, the game's items, and the game's introduction 
-	  * from text files. 
+	  * loading of the map's rooms, items, monsters, and puzzles from text files
+	  * into the backend database. 
 	  */
 	private void loadGame() throws InvalidFileException
 	{
@@ -78,9 +80,9 @@ public class MapModel
 	
 	/** Method: readRooms()
 	  * 
-	  * This method reads the rooms file and it generates
-	  * and updates each room with a user-specified id, name, description, 
-	  * and a list of exits. 
+	  * This method reads the Rooms.txt file and collects
+	  * necessary room attributes to send off to the 
+	  * database for insertion. 
 	  */
 	private void readRooms() throws InvalidFileException
 	{
@@ -127,11 +129,11 @@ public class MapModel
 		roomsParser.close(); 
 	}
 	
-	/** Method: readItems
+	/** Method: readItems()
 	  * 
-	  * This method reads the items file and it generates and updates
-	  * a list of items with user-defined id s, names, and descriptions. It
-	  * also uses that file to place those items into corresponding rooms. 
+	  * This method reads the Items.txt file and collects
+	  * necessary item attributes to send off to the 
+	  * database for insertion. 
 	  */
 	private void readItems() throws InvalidFileException
 	{
@@ -173,6 +175,12 @@ public class MapModel
 		itemsParser.close(); 
 	}	
 	
+	/** Method: readMonsters()
+	  * 
+	  * This method reads the Monsters.txt file and collects
+	  * necessary Monster attributes to send off to the 
+	  * database for insertion. 
+	  */
 	private void readMonsters() throws InvalidFileException 
 	{
 		Scanner monsterParser = null;
@@ -228,6 +236,12 @@ public class MapModel
 		monsterParser.close();
 	}
 	
+	/** Method: readPuzzles()
+	  * 
+	  * This method reads the Puzzles.txt file and collects
+	  * necessary Puzzles attributes to send off to the 
+	  * database for insertion. 
+	  */
 	private void readPuzzles() throws InvalidFileException
 	{
 		Scanner puzzleParser = null;
@@ -265,23 +279,11 @@ public class MapModel
 		puzzleParser.close();
 	}
 	
-	
-	/** Method: getFirstRoom
-	  * 
-	  * This method gets the first room of the map. This room is
-	  * the one that is listed first in the rooms file. 
-	  * @return Room the first (or starting) room in the game
-	  */
-	public Room getFirstRoom()
-	{
-		return getRoom(1);
-	}
-	
 	/** Method: getRoom
 	  * 
-	  * This method gets the room associated with a room ID or
-	  * it returns a new room (with that ID) if it cannot be found. 
-	  * @param roomID the ID used to identify a specific room 
+	  * This method gets the room associated with a room ID
+	  * 
+	  * @param roomID the id associated with a desired room 
 	  * @return Room a reference to a Room with that ID
 	  */
 	public Room getRoom(int roomID)
@@ -296,6 +298,10 @@ public class MapModel
 			newRoom = new Room(roomResult.getInt("RoomID")); 
 			newRoom.setName(roomResult.getString("Name"));
 			newRoom.setDescription(roomResult.getString("Description"));
+			
+			// While null in database upon creation, the isVisited status will match
+			// Unvisited as the getBoolean method returns false for null 
+			newRoom.setVisited(roomResult.getBoolean("isVisited"));  
 	    
 			String [] sqlTableExits = {"NorthExit", "SouthExit", "EastExit", "WestExit"}; 
 			String [] cardinalDirections = {"North", "South", "East", "West"};  
@@ -324,6 +330,13 @@ public class MapModel
 		return newRoom; 
 	}
 	
+	/** Method: getItems
+	  * 
+	  * This method gets the items within a room. 
+	  * 
+	  * @param roomID the id associated with a desired room 
+	  * @return ArrayList<Item> a list containing items within the room 
+	  */
 	private ArrayList<Item> getItems(int roomID)
 	{
 		ResultSet itemsResult = gameDB.getItems(roomID); 
@@ -349,6 +362,13 @@ public class MapModel
 		return items; 
 	}
 	
+	/** Method: getMonster
+	  * 
+	  * This method gets the Monster within a Room if it exists. 
+	  * 
+	  * @param roomID the id associated with a desired room 
+	  * @return Monster the monster within the room or null if one isn't found 
+	  */
 	private Monster getMonster(int roomID)
 	{
         ResultSet monsterResult = gameDB.getMonster(roomID); 
@@ -377,6 +397,13 @@ public class MapModel
 		return newMonster; 
 	}
 	
+	/** Method: getPuzzle
+	  * 
+	  * This method gets the Puzzle within a room if it exists. 
+	  * 
+	  * @param roomID the id associated with a desired room 
+	  * @return Puzzle the puzzle within a room or null if one doesn't exist
+	  */
 	private Puzzle getPuzzle(int roomID)
 	{
         ResultSet puzzleResult = gameDB.getPuzzle(roomID); 
@@ -400,6 +427,30 @@ public class MapModel
 		}
 		
 		return newPuzzle; 
+	}
+	
+	public void storeVisited(Player player, Room room)
+	{
+		
+	}
+	
+	public void storeSolved(Player player, Puzzle puzzle)
+	{
+		
+	}
+	
+	public void storeDefeated(Player player, Monster monster)
+	{
+		
+	}
+	
+	public void storeRoomItem(Player player, Room room, Item item)
+	{
+		
+	}
+	
+	public void storeInventoryItem(Player player, Room room, Item item)
+	{
 		
 	}
 }
