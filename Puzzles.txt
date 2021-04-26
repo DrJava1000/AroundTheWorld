@@ -6,7 +6,7 @@ PEMDAS -Parentheses, Exponents, Multiplication and Division (from left to right)
 2
 13
 What is (7 + 24) / (8 x 5 - 9)?
- 1
+1
 PEMDAS -Parentheses, Exponents, Multiplication and Division (from left to right), Addition and Subtraction (from left to right).
 3
 4

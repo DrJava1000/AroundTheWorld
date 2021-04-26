@@ -67,7 +67,6 @@ public class Adventure
 
 			if(!currentRoom.isVisited())
 				currentRoom.setVisited(true);
-			System.out.println(currentRoom.getMonster());
 
 			if(currentRoom.getMonster()!=null) 
 			{

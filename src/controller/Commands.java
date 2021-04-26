@@ -62,15 +62,20 @@ public class Commands
 	public String executeCommand(String userCmd, Room currentRoom) throws InvalidCommandException, InvalidExitException, InvalidItemException, InvalidRoomException
 	{
 		String pureCommand = userCmd.split(" ")[0]; 
-		boolean monster = currentRoom.getMonster().getMonsterName()!=null;
-		boolean puzzle = currentRoom.getPuzzle().getProblem()!=null;
+		boolean monster = currentRoom.getMonster()!=null;
+		boolean puzzle = currentRoom.getPuzzle()!=null;
 
 		if(monster) {
-			monster(currentRoom, pureCommand);
+			if(!currentRoom.getMonster().isDefeated()) {
+				return monster(currentRoom, userCmd);
+			}
 		}
-		
+
 		if(puzzle) {
-			puzzle(currentRoom, pureCommand);
+			if(!currentRoom.getPuzzle().isSolved())
+			{
+				return puzzle(currentRoom, userCmd);
+			}
 		}
 
 		if(!validateCommand(pureCommand))
@@ -252,8 +257,8 @@ public class Commands
 			return fight(room);
 		}
 		if(cmd.equals("run")) {
-			int run = run(room);
-			room.setRoomID(run);
+			int run = room.getRoomID()-1;
+			Adventure.setRoom(GameController.getMap().getRoom(run)); 
 			return "You ran away.";
 		}
 		else return checkItem(cmd, room);
@@ -261,7 +266,7 @@ public class Commands
 
 	private String fight(Room room) 
 	{
-		
+
 		return "What item will you use?";
 	}
 
@@ -292,18 +297,18 @@ public class Commands
 		int previousRoom = room.getRoomID()-1;
 		return previousRoom;
 	}
-	
+
 	private String puzzle(Room room, String cmd) {
-		if(cmd.equals(room.getPuzzle().getAnswer()))
+		if(cmd.toLowerCase().equals(room.getPuzzle().getAnswer().toLowerCase()))
 		{
 			room.getPuzzle().setSolved(true);
-			return room.getPuzzle().getCorrectAnswer();
+			return "Yay you got it!";
 		}
 		else 
-			{
+		{
 			player.setHealthPoints(player.getHealthPoints()-5);
 			return room.getPuzzle().getWRONG_ANSWER();
-			}
+		}
 	}
 
 
