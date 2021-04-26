@@ -15,10 +15,10 @@ public class Room
 	private String roomName; 
 	private String description;
 	private ArrayList<Exit> roomExits = new ArrayList<Exit>(); 
-	private ArrayList<Item> roomItems = new ArrayList<Item>(); 
-	private Puzzle puzzle = new Puzzle();
-	private Monster monster = new Monster();
+	private ArrayList<Item> roomItems = new ArrayList<Item>();
 	private boolean visitedStatus; 
+	private Puzzle puzzle;
+	private Monster monster;
 	
 	/** Constructor: Room
 	  * 
@@ -216,7 +216,7 @@ public class Room
 	  * into a single description for the room. 
 	  * @param descArr a collection of Strings (or lines) that make up a description
 	  */
-	public void buildDescription(ArrayList<String> descArr)
+	/*public void buildDescription(ArrayList<String> descArr)
 	{
 		description = ""; 
 		
@@ -224,7 +224,7 @@ public class Room
 		{
 			description += line + "\n";  
 		}
-	}
+	} */ 
 	
 	/** Method: getDescription
 	  * 
@@ -277,6 +277,15 @@ public class Room
 		return visitedStatus; 
 	}
 	
+	/** Method: storeVisited
+	  * 
+	  * This method stores the fact that the current Player has visited this room. 
+	  */
+	public void storeVisited(Player player)
+	{
+		GameController.getMap().storeVisited(player, this);
+	}
+	
 	/** Method: setExits
 	  * 
 	  * Associate a collection of items with a specific room. 
@@ -297,20 +306,40 @@ public class Room
 		return roomItems; 
 	}
 	
+	/** Method: getPuzzle
+	  * 
+	  * Get a puzzle within a room or null if it doesn't exist 
+	  * @return a puzzle within the room 
+	  */
 	public Puzzle getPuzzle() {
 		return puzzle;
 	}
 
-	public void setPuzzle(Puzzle puzzle) {
-		this.puzzle = puzzle;
+	/** Method: setPuzzle
+	  * 
+	  * Add a puzzle to a room. 
+	  * @parameter puzzle a puzzle to add to a room 
+	  */
+	public void setPuzzle(Puzzle p) {
+		puzzle = p;
 	}
 
+	/** Method: getMonster
+	  * 
+	  * Get a monster within a room or null if it doesn't exist 
+	  * @return monster the monster within the room 
+	  */
 	public Monster getMonster() {
 		return monster;
 	}
 
-	public void setMonster(Monster monster) {
-		this.monster = monster;
+	/** Method: setMonster
+	  * 
+	  * Add a monster to the room. 
+	  * @parameter monster the monster to add to the room 
+	  */
+	public void setMonster(Monster monst) {
+		monster = monst;
 	}
 
 	/** Method: toString

@@ -23,6 +23,7 @@ public class Commands
 	public static List<String> VALID_DIRECTIONS = Arrays.asList("west", "north", "south", "east", "up", "down"); 
 	public static List<String> VALID_COMMANDS = Arrays.asList("move", "look", "inspect", "get", "remove", "backpack", "exit", "fight", "run"); 
 	private Player player; 
+	private InventoryOperations inventory; 
 
 	/** Constructor: Commands
 	 * 
@@ -31,7 +32,8 @@ public class Commands
 	public Commands()
 	{
 		player = new Player(); 
-		player.setHealthPoints(100);
+		player.setHP(100);
+		inventory = new InventoryOperations(); 
 	}
 
 	/** Method: validateCommand
@@ -62,15 +64,15 @@ public class Commands
 	public String executeCommand(String userCmd, Room currentRoom) throws InvalidCommandException, InvalidExitException, InvalidItemException, InvalidRoomException
 	{
 		String pureCommand = userCmd.split(" ")[0]; 
-		boolean monster = currentRoom.getMonster().getMonsterName()!=null;
-		boolean puzzle = currentRoom.getPuzzle().getProblem()!=null;
+		boolean monster = currentRoom.getMonster()!=null;
+		boolean puzzle = currentRoom.getPuzzle()!=null;
 
 		if(monster) {
-			monster(currentRoom, pureCommand);
+			return monster(currentRoom, pureCommand);
 		}
 		
 		if(puzzle) {
-			puzzle(currentRoom, pureCommand);
+			return puzzle(currentRoom, pureCommand);
 		}
 
 		if(!validateCommand(pureCommand))
@@ -211,8 +213,7 @@ public class Commands
 		{
 			if(roomItem.getItemName().equalsIgnoreCase(item))
 			{
-				room.removeItem(roomItem);
-				player.addItem(roomItem); 
+				inventory.addToInventory(player, room, roomItem);
 				return "\nYou have added " + roomItem.getItemName() + " to your inventory.\n"; 
 			}
 		}
@@ -237,8 +238,7 @@ public class Commands
 		{
 			if(item.equalsIgnoreCase(playerItem.getItemName()))
 			{
-				room.addItem(playerItem);
-				player.removeItem(playerItem); 
+				inventory.removeFromInventory(player, room, playerItem);
 				return "\nYou have dropped " + playerItem.getItemName() + " in " + room.getName() + ".\n"; 
 			}
 		}
@@ -282,7 +282,7 @@ public class Commands
 		}
 		else
 		{
-			player.setHealthPoints(player.getHealthPoints()-10);
+			player.setHP(player.getHP()-10);
 			return room.getMonster().getWrongChoice();
 		}
 	}
@@ -301,8 +301,8 @@ public class Commands
 		}
 		else 
 			{
-			player.setHealthPoints(player.getHealthPoints()-5);
-			return room.getPuzzle().getWRONG_ANSWER();
+			player.setHP(player.getHP()-5);
+			return room.getPuzzle().WRONG_ANSWER;
 			}
 	}
 
