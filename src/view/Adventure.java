@@ -19,19 +19,19 @@ import gameExceptions.InvalidRoomException;
  * responsible for obtaining user input and passing it to the game controller 
  * for processing. It also manages the map's current room and it is responsible for all 
  * exception handling. 
-*/
+ */
 public class Adventure 
 {
 	private Scanner input;
 	private static Room currentRoom; 
 	private GameController gc; 
 	static boolean displayStatus; 
-	
+
 	/** Constructor: Adventure
-	  * 
-	  * The Adventure constructor initializes the scanner for user input
-	  * and it creates the game controller. 
-	  */
+	 * 
+	 * The Adventure constructor initializes the scanner for user input
+	 * and it creates the game controller. 
+	 */
 	public Adventure()
 	{
 		input = new Scanner(System.in); 
@@ -44,42 +44,52 @@ public class Adventure
 			System.exit(0);
 		}
 	}
-	
+
 	/** Method: playGame
-	  * 
-	  * The playGame method contains the game loop and is responsible for
-	  * accepting user commands and passing them to the game controller. 
-	  * It is also responsible for handling many of the error messages that come with
-	  * commands. 
-	  */
+	 * 
+	 * The playGame method contains the game loop and is responsible for
+	 * accepting user commands and passing them to the game controller. 
+	 * It is also responsible for handling many of the error messages that come with
+	 * commands. 
+	 */
 	private void playGame()
 	{
 		currentRoom = GameController.getMap().getFirstRoom(); 
-		
 		String command = ""; 
 		displayStatus = true; 
-		
+
 		while(true)
 		{	
 			if(displayStatus)
 				System.out.println(currentRoom.display()); 
-			
+
 			displayStatus = false; 
-			
+
 			if(!currentRoom.isVisited())
 				currentRoom.setVisited(true);
-			
-			if(currentRoom.getMonster().getMonsterName()!=null)
-				System.out.println(currentRoom.getMonster().getMonsterDescription());
-			
-			if(currentRoom.getPuzzle().getProblem()!=null)
-				System.out.println(currentRoom.getPuzzle().getProblem());
-			
+			System.out.println(currentRoom.getMonster());
+
+			if(currentRoom.getMonster()!=null) 
+			{
+				if(!currentRoom.getMonster().isDefeated()) 
+				{
+					System.out.println(currentRoom.getMonster().getMonsterDescription());
+				}
+			}
+
+			if(currentRoom.getPuzzle()!=null)
+			{
+				if(!currentRoom.getPuzzle().isSolved())
+				{
+					System.out.println(currentRoom.getPuzzle().getProblem());
+				}
+			}
+
 			System.out.print("\nWhat do you want to do?: "); 
 			command = input.nextLine(); 
-			
+
 			String response;
-			
+
 			try
 			{
 				response = gc.executeCommand(command, currentRoom);
@@ -87,7 +97,7 @@ public class Adventure
 			{
 				response = ex.getMessage(); 
 			}
-			
+
 			if(response.equalsIgnoreCase("EXIT_GAME"))
 			{
 				System.out.println("\nHope you've had fun."); 
@@ -96,25 +106,25 @@ public class Adventure
 				System.out.println(response); 	
 		}
 	}
-	
+
 	/** Method: setRoom
-	  * 
-	  * This method is used to change the player's current room. 
-	  * @param Room the new Room to set as the current
-	  */
+	 * 
+	 * This method is used to change the player's current room. 
+	 * @param Room the new Room to set as the current
+	 */
 	public static void setRoom(Room room)
 	{
 		currentRoom = room; 
 		displayStatus = true; 
 	} 
-	
+
 	/** Method: Main
-	  * 
-	  * This is Java's main method and it only serves to start loading
-	  * the game. 
-	  * @param args Java's default command-line arguments
+	 * 
+	 * This is Java's main method and it only serves to start loading
+	 * the game. 
+	 * @param args Java's default command-line arguments
 	 * @throws InvalidFileException 
-	  */
+	 */
 	public static void main(String[] args) throws InvalidFileException 
 	{
 		new Adventure().playGame();
