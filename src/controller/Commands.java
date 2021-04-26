@@ -67,12 +67,21 @@ public class Commands
 		boolean monster = currentRoom.getMonster()!=null;
 		boolean puzzle = currentRoom.getPuzzle()!=null;
 
-		if(monster) {
-			return monster(currentRoom, pureCommand);
+		if(monster) 
+    {
+			if(!currentRoom.getMonster().isDefeated()) 
+      {
+				return monster(currentRoom, userCmd);
+			}
 		}
-		
-		if(puzzle) {
-			return puzzle(currentRoom, pureCommand);
+
+		if(puzzle) 
+    {
+			if(!currentRoom.getPuzzle().isSolved())
+			{
+				return puzzle(currentRoom, userCmd);
+			}
+
 		}
 
 		if(!validateCommand(pureCommand))
@@ -252,8 +261,8 @@ public class Commands
 			return fight(room);
 		}
 		if(cmd.equals("run")) {
-			int run = run(room);
-			room.setRoomID(run);
+			int run = room.getRoomID()-1;
+			Adventure.setRoom(GameController.getMap().getRoom(run)); 
 			return "You ran away.";
 		}
 		else return checkItem(cmd, room);
@@ -261,7 +270,7 @@ public class Commands
 
 	private String fight(Room room) 
 	{
-		
+
 		return "What item will you use?";
 	}
 
@@ -292,19 +301,17 @@ public class Commands
 		int previousRoom = room.getRoomID()-1;
 		return previousRoom;
 	}
-	
+
 	private String puzzle(Room room, String cmd) {
-		if(cmd.equals(room.getPuzzle().getAnswer()))
+		if(cmd.toLowerCase().equals(room.getPuzzle().getAnswer().toLowerCase()))
 		{
 			room.getPuzzle().setSolved(true);
-			return room.getPuzzle().getCorrectAnswer();
+			return "Yay you got it!";
 		}
 		else 
-			{
-			player.setHP(player.getHP()-5);
-			return room.getPuzzle().WRONG_ANSWER;
-			}
+		{
+			player.setHealthPoints(player.getHealthPoints()-5);
+			return room.getPuzzle().getWRONG_ANSWER();
+		}
 	}
-
-
 }
