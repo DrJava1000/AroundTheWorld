@@ -19,7 +19,7 @@ public class Puzzle
 	private String tip;
 	private boolean isSolved;
 	private int roomID; 
-	public final String WRONG_ANSWER = "The answer to the question was incorrect, all of a sudden you feel your life drain a bit. "
+	public static final String WRONG_ANSWER = "The answer to the question was incorrect, all of a sudden you feel your life drain a bit. "
 			+ "You lost 5 health points.";
 	
 	/**
