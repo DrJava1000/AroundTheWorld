@@ -8,6 +8,7 @@ import java.sql.SQLException;
 
 import controller.Exit;
 //import gameExceptions.InvalidFileException;
+import controller.Player;
 
 import java.util.ArrayList;
 
@@ -82,23 +83,25 @@ public class ATWorldDB
 	  */
 	public void buildTables()
 	{
-		String createPlayersSQL = "CREATE TABLE Players(PlayerID int PRIMARY KEY, Name varchar(255),"
+		String createPlayersSQL = "CREATE TABLE Players(PlayerID int, Name varchar(255),"
 				+ " Score int, Location int,"
 				+ " Health int, ItemSlot int, ItemSlot2 int, ItemSlot3 int"
 				+ ");"; 
-		String createMonstersSQL = "CREATE TABLE Monsters(MonsterID int PRIMARY KEY, Name varchar(255),"
+		String createMonstersSQL = "CREATE TABLE Monsters(MonsterID int, Name varchar(255),"
 				+ " Description varchar(255), CorrectDefenseItem int,"
 				+ " CorrectDefenseItemResponse varchar(255), IncorrectDefenseItemResponse varchar(255),"
 				+ " Tip varchar(255), Location int, isDefeated bit, Player int);"; 
-		String createItemsSQL = "CREATE TABLE Items(ItemID int PRIMARY KEY, Name varchar(255),"
+		String createItemsSQL = "CREATE TABLE Items(ItemID int, Name varchar(255),"
 				+ " Description varchar(255), Location int, Player int);"; 
-		String createRoomsSQL = "CREATE TABLE Rooms(RoomID int PRIMARY KEY, Name varchar(255),"
+		String createRoomsSQL = "CREATE TABLE Rooms(RoomID int, Name varchar(255),"
 				+ " Description varchar(255), NorthExit int,"
 				+ " SouthExit int, EastExit int, WestExit int, isVisited bit, Player int);"; 
-		String createPuzzlesSQL = "CREATE TABLE Puzzles(PuzzleID int PRIMARY KEY, Prompt varchar(255),"
+		String createPuzzlesSQL = "CREATE TABLE Puzzles(PuzzleID int, Prompt varchar(255),"
 				+ " Answer varchar(255), Tip varchar(255),"
 				+ " Location int, isCompleted bit, Player int);"; 
-		
+		String defaultPlayerSQL = "INSERT INTO Players (Name, Score, Location, Health)"
+		+ " VALUES (" + "\'" + "default" + "\'" + ", " + "\'" + "0" + "\'" + ", " + "\'" 
+		+ "1" + "\'" + ", " + "\'" + "100" + "\'" + ");"; 
 		try
 		{
 			sqlStmt.executeUpdate(createPlayersSQL); 
@@ -106,6 +109,7 @@ public class ATWorldDB
 			sqlStmt.executeUpdate(createItemsSQL); 
 			sqlStmt.executeUpdate(createRoomsSQL); 
 			sqlStmt.executeUpdate(createPuzzlesSQL); 
+			sqlStmt.executeUpdate(defaultPlayerSQL); // default player used for template 
 		}catch(SQLException e)
 		{
 			// throw new Exception();
@@ -119,13 +123,13 @@ public class ATWorldDB
 	  * @parameter roomID the room id used to search for the associated room entry
 	  * @return ResultSet containing 1 room entry representing a Room with the specified room id 
 	  */
-	public ResultSet getRoom(int roomID)
+	public ResultSet getRoom(Player player, int roomID)
 	{
 		ResultSet result; 
 		try 
 		{
 			result = sqlStmt.executeQuery("SELECT * FROM Rooms"
-					+ " WHERE RoomID=" + roomID + ";");
+					+ " WHERE RoomID=" + roomID + " AND " + "Player=" + "\'" + player.getName() + "\'" + ";");
 		} catch (SQLException e) 
 		{
 			return null; 
@@ -142,13 +146,13 @@ public class ATWorldDB
 	  * @parameter roomID the room id used to search for the associated item entries 
 	  * @return ResultSet containing item entries that represent items within the specified room 
 	  */
-	public ResultSet getItems(int roomID)
+	public ResultSet getItems(Player player, int roomID)
 	{
 		ResultSet result; 
 		try 
 		{
 			result = sqlStmt.executeQuery("SELECT * FROM Items"
-					+ " WHERE Location=" + roomID + ";");
+					+ " WHERE Location=" + roomID + " AND " + "Player=" + "\'" + player.getName() + "\'" + ";");
 		} catch (SQLException e) 
 		{
 			return null; 
@@ -165,13 +169,13 @@ public class ATWorldDB
 	  * @parameter roomID the room id used to search for the associated monster entry
 	  * @return ResultSet containing 1 monster entry representing a Monster that exists in that room 
 	  */
-	public ResultSet getMonster(int roomID)
+	public ResultSet getMonster(Player player, int roomID)
 	{
 		ResultSet result; 
 		try 
 		{
 			result = sqlStmt.executeQuery("SELECT * FROM Monsters"
-					+ " WHERE Location=" + roomID + ";");
+					+ " WHERE Location=" + roomID + " AND " + "Player=" + "\'" + player.getName() + "\'" + ";");
 		} catch (SQLException e) 
 		{
 			return null; 
@@ -188,13 +192,13 @@ public class ATWorldDB
 	  * @parameter roomID the room id used to search for the associated puzzle entry
 	  * @return ResultSet containing 1 Puzzle entry representing a Puzzle that exists in that room 
 	  */
-	public ResultSet getPuzzle(int roomID)
+	public ResultSet getPuzzle(Player player, int roomID)
 	{
 		ResultSet result; 
 		try 
 		{
 			result = sqlStmt.executeQuery("SELECT * FROM Puzzles"
-					+ " WHERE Location=" + roomID + ";");
+					+ " WHERE Location=" + roomID + " AND " + "Player=" + "\'" + player.getName() + "\'" + ";");
 		} catch (SQLException e) 
 		{
 			return null; 
@@ -217,9 +221,9 @@ public class ATWorldDB
 	{
 		try 
 		{
-			sqlStmt.executeUpdate("INSERT INTO Rooms (RoomID, Name, Description)"
+			sqlStmt.executeUpdate("INSERT INTO Rooms (RoomID, Name, Description, Player)"
 					+ " VALUES (" + "\'" + id + "\'" +  ", " + "\'" + name + "\'" 
-					+ ", " + "\'" + description + "\'" + ");");
+					+ ", " + "\'" + description + "\'" + ", " + "\'" + "default" + "\'" + ");");
 		} catch (SQLException e) 
 		{
 			// throw new Exception()
@@ -260,9 +264,10 @@ public class ATWorldDB
 	{
 		try 
 		{
-			sqlStmt.executeUpdate("INSERT INTO Items (ItemID, Name, Description, Location)"
+			sqlStmt.executeUpdate("INSERT INTO Items (ItemID, Name, Description, Location, Player)"
 					+ " VALUES (" + "\'" + id + "\'" + ", " + "\'" + name + "\'" + 
-					", " + "\'" + description + "\'" + ", " + "\'" + location + "\'" + ");");
+					", " + "\'" + description + "\'" + ", " + "\'" + location + "\'" + ", " + "\'"
+					+ "default" + "\'" + ");");
 		} catch (SQLException e) 
 		{
 			// throw new Exception(); 
@@ -292,11 +297,11 @@ public class ATWorldDB
 		try 
 		{
 			sqlStmt.executeUpdate("INSERT INTO Monsters (MonsterID, Name, Description, CorrectDefenseItem,"
-					+ " CorrectDefenseItemResponse, IncorrectDefenseItemResponse, Tip, Location)"
+					+ " CorrectDefenseItemResponse, IncorrectDefenseItemResponse, Tip, Location, Player)"
 					+ " VALUES (" + "\'" + id + "\'" + ", " + "\'" + name + "\'" + ", " + 
 					"\'" + description + "\'" + ", " + "\'" + correctItem + "\'" + ", " + "\'" + rightChoice
 					+ "\'" + ", " + "\'" + wrongChoice + "\'" + ", " + "\'" + tip + "\'" 
-					+ ", " + "\'" + location + "\'" + ");");
+					+ ", " + "\'" + location + "\'" + ", " + "\'" + "default" + "\'" + ");");
 		} catch (SQLException e) 
 		{
 			// throw new Exception(); 
@@ -318,12 +323,117 @@ public class ATWorldDB
 	{
 		try 
 		{
-			sqlStmt.executeUpdate("INSERT INTO Puzzles (PuzzleID, Prompt, Answer, Tip, Location)"
+			sqlStmt.executeUpdate("INSERT INTO Puzzles (PuzzleID, Prompt, Answer, Tip, Location, Player)"
 					+ " VALUES (" + "\'" + id + "\'" + ", " + "\'" + prompt + "\'" + ", " + "\'" 
-					+ answer + "\'" + ", " + "\'" + tip + "\'" + ", " + "\'" + location + "\'" + ");");
+					+ answer + "\'" + ", " + "\'" + tip + "\'" + ", " + "\'" + location + "\'" + ", "
+					+ "\'" + "default" + "\'" + ");");
 		} catch (SQLException e) 
 		{
 			// throw new Exception(); 
 		} 
+	}
+	
+	public boolean checkProfileExistence(String playerName)
+	{
+        ResultSet result = null; 
+		
+		try 
+		{
+			result = sqlStmt.executeQuery("SELECT * FROM Players WHERE Name=" + "\'" + playerName + "\'" + ";");
+		} catch (SQLException e) 
+		{
+			System.out.println(e.getMessage()); 
+		}
+		
+		try 
+		{
+			return result.next(); 
+		} catch (SQLException e) 
+		{
+			// throw new Exception()
+		}
+		
+		return false; 
+	}
+	
+	public ResultSet loadProfile(String playerName)
+	{
+		ResultSet result = null; 
+		
+		if(checkProfileExistence(playerName))
+		{
+			try 
+			{
+				result = sqlStmt.executeQuery("SELECT * FROM Players WHERE Name=" + "\'" + playerName + "\'" + ";");
+			} catch (SQLException e) 
+			{
+				// throw new Exception()
+			}
+		}
+		
+		return result; 
+	}
+	
+	public boolean newProfile(String playerName)
+	{
+		
+		if(!checkProfileExistence(playerName))
+		{
+			try 
+			{
+				sqlStmt.executeUpdate("INSERT INTO Players (Name, Score, Location, Health)"
+						+ " VALUES (" + "\'" + playerName + "\'" + ", " + "\'" + "0" + "\'" + ", " + "\'" 
+						+ "1" + "\'" + ", " + "\'" + "100" + "\'" + ");");
+				generateFromDefaultProfile(playerName); 
+			} catch (SQLException e) 
+			{
+				// throw new Exception()
+			}
+			
+			return false;
+		}
+			
+		return true; 
+	}
+	
+	private void generateFromDefaultProfile(String playerName)
+	{
+		try
+		{
+			sqlStmt.executeUpdate("INSERT INTO Rooms(RoomID, Name, Description, "
+					+ "NorthExit, SouthExit, EastExit, WestExit, Player) "
+					+ "SELECT RoomID, Name, Description, NorthExit, SouthExit, EastExit, WestExit, \"" + playerName + "\" "
+					+ "FROM Rooms WHERE Player=\"default\";"); // for rooms 
+			sqlStmt.executeUpdate("INSERT INTO Items (ItemID, Name, Description, Location, Player) "
+					+ "SELECT ItemID, Name, Description, Location, \"" + playerName + "\" "
+					+ "FROM Items WHERE Player=\"default\";"); // for items
+			sqlStmt.executeUpdate("INSERT INTO Monsters (MonsterID, Name, Description, CorrectDefenseItem, "
+					+ "CorrectDefenseItemResponse, IncorrectDefenseItemResponse, Tip, Location, Player) "
+					+ "SELECT MonsterID, Name, Description, CorrectDefenseItem, CorrectDefenseItemResponse,"
+					+ "IncorrectDefenseItemResponse, Tip, Location, \"" + playerName + "\" "
+					+ "FROM Monsters WHERE Player=\"default\";"); // for monsters
+			sqlStmt.executeUpdate("INSERT INTO Puzzles (PuzzleID, Prompt, Answer, Tip, Location, Player) "
+					+ "SELECT PuzzleID, Prompt, Answer, Tip, Location, \"" + playerName + "\" "
+					+ "FROM Puzzles WHERE Player=\"default\";"); // for puzzles
+		}catch(SQLException e)
+		{
+			System.out.println(e.getMessage()); 
+			// throw new Exception(); 
+		}
+	}
+
+	public void removePlayer(String playerName) 
+	{
+		try
+		{
+			sqlStmt.executeUpdate("DELETE FROM Rooms WHERE Player=" + "\'" + playerName + "\';"); // for rooms 
+			sqlStmt.executeUpdate("DELETE FROM Items WHERE Player=" + "\'" + playerName + "\';"); // for items
+			sqlStmt.executeUpdate("DELETE FROM Monsters WHERE Player=" + "\'" + playerName + "\';"); // for monsters
+			sqlStmt.executeUpdate("DELETE FROM Puzzles WHERE Player=" + "\'" + playerName + "\';"); // for puzzles
+			sqlStmt.executeUpdate("DELETE FROM Players WHERE Name=" + "\'" + playerName + "\';"); // for players 
+		}catch(SQLException e)
+		{
+			// throw new Exception(); 
+		}
 	}
 }

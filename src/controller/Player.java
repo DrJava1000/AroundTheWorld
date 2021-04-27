@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class Player 
 { 
 	private int hp;
+	private String name; 
 	private int score; 
 	private ArrayList<Item> inventory; // contains a list of roomIDs 
 	private int roomID; 
@@ -113,5 +114,13 @@ public class Player
 
 	public void setRoomID(int roomID) {
 		this.roomID = roomID;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

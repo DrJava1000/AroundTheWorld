@@ -1,12 +1,12 @@
 1
 Atlanta Room 1 
-Woah-that portal is quick! You look around at your surroundings, but you do not know where you are. You start to notice a place called the \"World of Coca-Cola\. You then remember that your best friend visited this attraction when she went on vacation toATLANTA! You are in Atlanta. Huh, well that is not the first place I would have visited, but I guess it is a pretty normal start. You notice an open portal that will take you to the next location. Type SOUTH to go into the next room.
+Woah-that portal is quick! You look around at your surroundings, but you do not know where you are. You start to notice a place called the World of Coca-Cola. You then remember that your best friend visited this attraction when she went on vacation toATLANTA! You are in Atlanta. Huh, well that is not the first place I would have visited, but I guess it is a pretty normal start. You notice an open portal that will take you to the next location. Type SOUTH to go into the next room.
 ----
 SOUTH 2
 ----
 2
 Atlanta Room 2 
-Alright, so you are at the second location, but it is still Atlanta. I guess it would not hurt to keep looking around the city. You continue walking around, and you notice a restaurant called \"The Varsity\". The smell of chili and onion rings entices you, but the place looks packed and you do not have any time to waste. You then notice that there is a puzzle to complete-
+Alright, so you are at the second location, but it is still Atlanta. I guess it would not hurt to keep looking around the city. You continue walking around, and you notice a restaurant called The Varsity. The smell of chili and onion rings entices you, but the place looks packed and you do not have any time to waste. You then notice that there is a puzzle to complete-
 ----
 EAST 3
 NORTH 1
