@@ -22,10 +22,11 @@ import gameExceptions.InvalidRoomException;
  */
 public class Adventure 
 {
-	private Scanner input;
+	private Scanner commandParser;
 	private static Room currentRoom; 
 	private GameController gc; 
-	static boolean displayStatus; 
+	static boolean displayRoom;
+	static boolean displayMenu; 
 
 	/** Constructor: Adventure
 	 * 
@@ -34,7 +35,8 @@ public class Adventure
 	 */
 	public Adventure()
 	{
-		input = new Scanner(System.in); 
+		commandParser = new Scanner(System.in); 
+		
 		try
 		{
 			gc = new GameController(); 
@@ -54,38 +56,47 @@ public class Adventure
 	 */
 	private void playGame()
 	{
-		currentRoom = GameController.getMap().getRoom(1); 
-		String command = ""; 
-		displayStatus = true; 
+		displayRoom = false; 
+		displayMenu = true; 
 
+		String command; 
+		currentRoom = new Room(); 
+		
 		while(true)
 		{	
-			if(displayStatus)
+			if(displayRoom)
 				System.out.println(currentRoom.display()); 
 
-			displayStatus = false; 
-
-			if(!currentRoom.isVisited())
+			if(displayMenu)
+			{
+				System.out.println("Around The World \n");
+				System.out.println("New Game (new [PlayerName]), Load (load [PlayerName]) , or Exit (exit)"); 
+				
+		    // displayStatus = false; 
+			}else
+			{
+				if(!currentRoom.isVisited())
 				currentRoom.setVisited(true);
 
-			if(currentRoom.getMonster()!=null) 
-			{
-				if(!currentRoom.getMonster().isDefeated()) 
+				if(currentRoom.getMonster()!=null) 
 				{
-					System.out.println(currentRoom.getMonster().getMonsterDescription());
+					if(!currentRoom.getMonster().isDefeated()) 
+					{
+						System.out.println(currentRoom.getMonster().getMonsterDescription());
+					}
 				}
-			}
 
-			if(currentRoom.getPuzzle()!=null)
-			{
-				if(!currentRoom.getPuzzle().isSolved())
+				if(currentRoom.getPuzzle()!=null)
 				{
-					System.out.println(currentRoom.getPuzzle().getProblem());
+					if(!currentRoom.getPuzzle().isSolved())
+					{
+						System.out.println(currentRoom.getPuzzle().getProblem());
+					}
 				}
-			}
+		    }
 
 			System.out.print("\nWhat do you want to do?: "); 
-			command = input.nextLine(); 
+			command = commandParser.nextLine(); 
 
 			String response;
 
@@ -114,8 +125,14 @@ public class Adventure
 	public static void setRoom(Room room)
 	{
 		currentRoom = room; 
-		displayStatus = true; 
-	} 
+		displayRoom = true; 
+		displayMenu = false; 
+	}
+	
+	public static boolean getDisplayMenuStatus()
+	{
+		return displayMenu; 
+	}
 
 	/** Method: Main
 	 * 
