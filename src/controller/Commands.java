@@ -171,7 +171,7 @@ public class Commands
 		if(!validateDirection(direction, currentRoom))
 			throw new InvalidExitException("\nThis is not a valid direction for the move command.");  
 
-		// up and down are alia for north and south 
+		// up and down are alias for north and south 
 		if(direction.equalsIgnoreCase("up"))
 			direction = "north"; 
 		if(direction.equalsIgnoreCase("down"))
@@ -277,6 +277,9 @@ public class Commands
 
 	private String monster(Room room, String cmd)
 	{
+		if(cmd.toLowerCase().equals("tip")) {
+			return room.getMonster().getTip();
+		}
 		if(cmd.equals("fight")){
 			return fight(room);
 		}
@@ -316,14 +319,12 @@ public class Commands
 		}
 	}
 
-	private int run(Room room)
-	{
-		int previousRoom = room.getRoomID()-1;
-		return previousRoom;
-	}
 
-	private String puzzle(Room room, String cmd) 
-	{
+private String puzzle(Room room, String cmd) 
+  {
+		if(cmd.toLowerCase().equals("tip")) {
+			return room.getPuzzle().getTip();
+		}
 		if(cmd.toLowerCase().equals(room.getPuzzle().getAnswer().toLowerCase()))
 		{
 			room.getPuzzle().setSolved(true);
@@ -332,6 +333,8 @@ public class Commands
 		else 
 		{
 			GameController.getCurrentPlayer().setHP(GameController.getCurrentPlayer().getHP()-5);
+=======
+			player.setHP(player.getHP()-5);
 			return Puzzle.WRONG_ANSWER;
 		}
 	}
