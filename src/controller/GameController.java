@@ -6,6 +6,7 @@ import gameExceptions.InvalidFileException;
 import gameExceptions.InvalidItemException;
 import gameExceptions.InvalidRoomException;
 import model.MapModel;
+import view.Adventure;
 
 /**Class: GameController 
  * 
@@ -19,6 +20,7 @@ public class GameController
 {
 	private static MapModel map; 
 	private Commands commands; 
+	private static Player currentPlayer; 
 	
 	/** Constructor: GameController
 	  * 
@@ -52,7 +54,7 @@ public class GameController
 	  */
 	public Room retrieveByID(int curRoom)
 	{
-		return map.getRoom(curRoom); 
+		return map.getRoom(currentPlayer, curRoom); 
 	}
 	
 	/** Method: executeCommand
@@ -66,5 +68,20 @@ public class GameController
 	public String executeCommand(String cmd, Room room) throws InvalidCommandException, InvalidExitException, InvalidItemException, InvalidRoomException
 	{
 		return commands.executeCommand(cmd, room); 
+	}
+
+	public static Player getCurrentPlayer() 
+	{
+		return currentPlayer;
+	}
+
+	public static void setCurrentPlayer(Player player) 
+	{
+		currentPlayer = player;
+	}
+	
+	public static void setCurrentRoom(Room room)
+	{
+		Adventure.setRoom(room);
 	}
 }
