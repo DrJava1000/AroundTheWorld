@@ -21,18 +21,19 @@ import view.Adventure;
 public class Commands 
 {
 	public static List<String> VALID_DIRECTIONS = Arrays.asList("west", "north", "south", "east", "up", "down"); 
-	public static List<String> VALID_COMMANDS = Arrays.asList("move", "look", "inspect", "get", "remove", "backpack", "exit", "fight", "run"); 
-	private Player player; 
-	private InventoryOperations inventory; 
-
+	public static List<String> VALID_ROOM_COMMANDS = Arrays.asList("move", "look", "inspect", "get", "remove", "backpack", 
+			"exit", "fight", "run", "exit");
+	public static List<String> VALID_MENU_COMMANDS = Arrays.asList("new", "load", "exit"); 
+	private InventoryOperations inventory;
 	/** Constructor: Commands
 	 * 
 	 * Initialize the player, healthPoints, (and their inventory). 
 	 */
 	public Commands()
 	{
-		player = new Player(); 
-		player.setHP(100);
+		Player newPlayer = new Player(); 
+		newPlayer.setHP(100);
+		GameController.setCurrentPlayer(newPlayer); 
 		inventory = new InventoryOperations(); 
 	}
 
@@ -43,9 +44,20 @@ public class Commands
 	 * @param userCmd the user-entered command without additional parameters
 	 * @return whether the command is allowed or not
 	 */
-	private boolean validateCommand(String userCmd)
+	private boolean validateRoomCommand(String userCmd)
 	{
-		for(String validCom : VALID_COMMANDS)
+		for(String validCom : VALID_ROOM_COMMANDS)
+		{
+			if(userCmd.equalsIgnoreCase(validCom))
+				return true; 
+		}
+
+		return false; 
+	}
+	
+	private boolean validateMenuCommand(String userCmd)
+	{
+		for(String validCom : VALID_MENU_COMMANDS)
 		{
 			if(userCmd.equalsIgnoreCase(validCom))
 				return true; 
@@ -66,17 +78,25 @@ public class Commands
 		String pureCommand = userCmd.split(" ")[0]; 
 		boolean monster = currentRoom.getMonster()!=null;
 		boolean puzzle = currentRoom.getPuzzle()!=null;
+		
+		// enter menu sequence 
+		if(Adventure.getDisplayMenuStatus())
+		{
+			return executeMenuCommands(userCmd); 
+		}
 
+		// enter into monster sequence 
 		if(monster) 
-    {
+        {
 			if(!currentRoom.getMonster().isDefeated()) 
-      {
+            {
 				return monster(currentRoom, userCmd);
 			}
 		}
 
+		// enter into puzzle sequence
 		if(puzzle) 
-    {
+        {
 			if(!currentRoom.getPuzzle().isSolved())
 			{
 				return puzzle(currentRoom, userCmd);
@@ -84,12 +104,12 @@ public class Commands
 
 		}
 
-		if(!validateCommand(pureCommand))
-			throw new InvalidCommandException("\nThis is not a valid command. Try Again.");
+		if(!validateRoomCommand(pureCommand))
+			throw new InvalidCommandException("\nThis is not a valid room command. Try Again.");
 		if(pureCommand.equalsIgnoreCase("look"))
 			return look(currentRoom); 
 		if(pureCommand.equalsIgnoreCase("backpack"))
-			return player.printInventory(); 
+			return GameController.getCurrentPlayer().printInventory(); 
 		if(pureCommand.equalsIgnoreCase("exit"))
 			return "EXIT_GAME";
 		else 
@@ -166,7 +186,7 @@ public class Commands
 		{
 			if(exit.getDirection().equalsIgnoreCase(direction))
 			{
-				Adventure.setRoom(GameController.getMap().getRoom(exit.getRoomNum())); 
+				Adventure.setRoom(GameController.getMap().getRoom(GameController.getCurrentPlayer(), exit.getRoomNum())); 
 				return "\nGoing " + exit.getDirection() + "\n"; 
 			}
 		}
@@ -222,7 +242,7 @@ public class Commands
 		{
 			if(roomItem.getItemName().equalsIgnoreCase(item))
 			{
-				inventory.addToInventory(player, room, roomItem);
+				inventory.addToInventory(GameController.getCurrentPlayer(), room, roomItem);
 				return "\nYou have added " + roomItem.getItemName() + " to your inventory.\n"; 
 			}
 		}
@@ -241,13 +261,13 @@ public class Commands
 	 */
 	private String drop(String item, Room room) throws InvalidItemException
 	{
-		player.getInventory(); 
+		GameController.getCurrentPlayer().getInventory(); 
 
-		for(Item playerItem : player.getInventory())
+		for(Item playerItem : GameController.getCurrentPlayer().getInventory())
 		{
 			if(item.equalsIgnoreCase(playerItem.getItemName()))
 			{
-				inventory.removeFromInventory(player, room, playerItem);
+				inventory.removeFromInventory(GameController.getCurrentPlayer(), room, playerItem);
 				return "\nYou have dropped " + playerItem.getItemName() + " in " + room.getName() + ".\n"; 
 			}
 		}
@@ -262,7 +282,7 @@ public class Commands
 		}
 		if(cmd.equals("run")) {
 			int run = room.getRoomID()-1;
-			Adventure.setRoom(GameController.getMap().getRoom(run)); 
+			Adventure.setRoom(GameController.getMap().getRoom(GameController.getCurrentPlayer(), run)); 
 			return "You ran away.";
 		}
 		else return checkItem(cmd, room);
@@ -276,7 +296,7 @@ public class Commands
 
 	private String checkItem(String item, Room room)
 	{
-		ArrayList<Item> items = player.getInventory();
+		ArrayList<Item> items = GameController.getCurrentPlayer().getInventory();
 		int itemID = 0;
 		for(Item i : items) {
 			if(item.equals(i.getItemName()))
@@ -291,7 +311,7 @@ public class Commands
 		}
 		else
 		{
-			player.setHP(player.getHP()-10);
+			GameController.getCurrentPlayer().setHP(GameController.getCurrentPlayer().getHP()-10);
 			return room.getMonster().getWrongChoice();
 		}
 	}
@@ -302,7 +322,8 @@ public class Commands
 		return previousRoom;
 	}
 
-	private String puzzle(Room room, String cmd) {
+	private String puzzle(Room room, String cmd) 
+	{
 		if(cmd.toLowerCase().equals(room.getPuzzle().getAnswer().toLowerCase()))
 		{
 			room.getPuzzle().setSolved(true);
@@ -310,8 +331,44 @@ public class Commands
 		}
 		else 
 		{
-			player.setHealthPoints(player.getHealthPoints()-5);
-			return room.getPuzzle().getWRONG_ANSWER();
+			GameController.getCurrentPlayer().setHP(GameController.getCurrentPlayer().getHP()-5);
+			return Puzzle.WRONG_ANSWER;
 		}
+	}
+	
+	private String executeMenuCommands(String userCmd) throws InvalidCommandException
+	{
+		String pureCommand = userCmd.split(" ")[0]; 
+		String parameter; 
+		
+		if(!validateMenuCommand(pureCommand))
+			throw new InvalidCommandException("\nThis is not a valid menu command. Try Again.\n");
+		
+		if(pureCommand.equalsIgnoreCase("exit"))
+			return "EXIT_GAME"; 
+		
+		try
+		{
+			parameter = userCmd.split(" ")[1];
+		}catch(ArrayIndexOutOfBoundsException ex)
+		{
+			throw new InvalidCommandException("\nYou have a missing parameter for the chosen command.\n"); 
+		}
+		
+		if(pureCommand.equalsIgnoreCase("new"))
+			return newGame(parameter); 
+		if(pureCommand.equalsIgnoreCase("load"))
+			return loadGame(parameter); 
+		return ""; 
+	}
+	
+	private String newGame(String playerName)
+	{
+		return GameController.getMap().newPlayerProfile(playerName); 
+	}
+	
+	private String loadGame(String playerName)
+	{
+		return GameController.getMap().loadPlayerProfile(playerName); 
 	}
 }
