@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileNotFoundException; 
 
 import controller.Exit;
+import controller.GameController;
 import controller.Item;
 import controller.Monster;
 import controller.Player;
@@ -286,9 +287,9 @@ public class MapModel
 	  * @param roomID the id associated with a desired room 
 	  * @return Room a reference to a Room with that ID
 	  */
-	public Room getRoom(int roomID)
+	public Room getRoom(Player player, int roomID)
 	{
-		ResultSet roomResult = gameDB.getRoom(roomID); 
+		ResultSet roomResult = gameDB.getRoom(player, roomID); 
 		
 		Room newRoom = null; 
 		ArrayList<Exit> exits = new ArrayList<Exit>(); 
@@ -319,13 +320,14 @@ public class MapModel
 			}
 		}catch(SQLException sqlError)
 		{
+			System.out.println(sqlError.getMessage()); 
 			// throw new Exception()
 		}
 	    
 	    newRoom.setExits(exits);
-	    newRoom.setItems(getItems(newRoom.getRoomID()));
-	    newRoom.setMonster(getMonster(newRoom.getRoomID())); 
-	    newRoom.setPuzzle(getPuzzle(newRoom.getRoomID())); 
+	    newRoom.setItems(getItems(player, newRoom.getRoomID()));
+	    newRoom.setMonster(getMonster(player, newRoom.getRoomID())); 
+	    newRoom.setPuzzle(getPuzzle(player, newRoom.getRoomID())); 
 	    
 		return newRoom; 
 	}
@@ -337,9 +339,9 @@ public class MapModel
 	  * @param roomID the id associated with a desired room 
 	  * @return ArrayList<Item> a list containing items within the room 
 	  */
-	private ArrayList<Item> getItems(int roomID)
+	private ArrayList<Item> getItems(Player player, int roomID)
 	{
-		ResultSet itemsResult = gameDB.getItems(roomID); 
+		ResultSet itemsResult = gameDB.getItems(player, roomID); 
 		
 		ArrayList<Item> items = new ArrayList<Item>(); 
 		
@@ -369,9 +371,9 @@ public class MapModel
 	  * @param roomID the id associated with a desired room 
 	  * @return Monster the monster within the room or null if one isn't found 
 	  */
-	private Monster getMonster(int roomID)
+	private Monster getMonster(Player player, int roomID)
 	{
-        ResultSet monsterResult = gameDB.getMonster(roomID); 
+        ResultSet monsterResult = gameDB.getMonster(player, roomID); 
 		
         Monster newMonster = null; 
         
@@ -387,6 +389,7 @@ public class MapModel
 				newMonster.setRightChoice(monsterResult.getString("CorrectDefenseItemResponse"));
 				newMonster.setWrongChoice(monsterResult.getString("IncorrectDefenseItemResponse"));
 				newMonster.setTip(monsterResult.getString("Tip"));
+				newMonster.setRoomID(monsterResult.getInt("Location"));
 				newMonster.setDefeated(monsterResult.getBoolean("isDefeated"));
 			}
 		} catch (SQLException e) 
@@ -404,9 +407,9 @@ public class MapModel
 	  * @param roomID the id associated with a desired room 
 	  * @return Puzzle the puzzle within a room or null if one doesn't exist
 	  */
-	private Puzzle getPuzzle(int roomID)
+	private Puzzle getPuzzle(Player player, int roomID)
 	{
-        ResultSet puzzleResult = gameDB.getPuzzle(roomID); 
+        ResultSet puzzleResult = gameDB.getPuzzle(player, roomID); 
 		
         Puzzle newPuzzle = null;
         
@@ -419,6 +422,7 @@ public class MapModel
 				newPuzzle.setProblem(puzzleResult.getString("Prompt"));
 				newPuzzle.setAnswer(puzzleResult.getString("Answer"));
 				newPuzzle.setTip(puzzleResult.getString("Tip"));
+				newPuzzle.setRoomID(puzzleResult.getInt("Location"));
 				newPuzzle.setSolved(puzzleResult.getBoolean("isCompleted"));
 			}
 		} catch (SQLException e) 
@@ -427,6 +431,78 @@ public class MapModel
 		}
 		
 		return newPuzzle; 
+	}
+	
+	public String loadPlayerProfile(String playerName)
+	{
+		ResultSet profile = gameDB.loadProfile(playerName); 
+		
+		// if profile doesn't exist 
+		if(profile == null)
+		{
+			return "\nThe specified player save doesn't exist.\n"; 
+		}
+		
+		// if profile exists 	
+		Player newPlayer = new Player();
+		newPlayer.setName(playerName);
+		
+		// ITEMS_NEED_TO_BE_ADDED
+		try
+		{
+			newPlayer.setScore(profile.getInt("Score"));
+			newPlayer.setRoomID(profile.getInt("Location"));
+			newPlayer.setHP(profile.getInt("Health"));
+			GameController.setCurrentRoom(getRoom(newPlayer, profile.getInt("Location")));
+			
+		}catch(SQLException sqlErr)
+		{
+			// throw new Exception()
+		}
+		
+		GameController.setCurrentPlayer(newPlayer);
+				
+		return "\nThe player save has been loaded.\n"; 
+	}
+	
+	public String newPlayerProfile(String playerName)
+	{
+		boolean profileExists = gameDB.newProfile(playerName); 
+		
+		// if profile doesn't exist
+		if(!profileExists)
+		{
+			generateNewPlayer(playerName); 
+			return "\nThe player save, " + playerName + ", has been created. Launching save \"" + playerName + "\"...\n"; 
+		}
+		
+		// if profile does exist
+		Scanner overwriteParser = new Scanner(System.in); 
+		
+		System.out.println("\nThe player save already exists. Do you want to overwrite it?\n"); 
+		String overwriteDecision = overwriteParser.nextLine(); 
+		
+		if(overwriteDecision.equalsIgnoreCase("yes"))
+		{
+			gameDB.removePlayer(playerName); 
+			gameDB.newProfile(playerName);
+			generateNewPlayer(playerName); 
+			
+			return "\nThe player save was overwritten. A new game is being started. \n"; 
+		}
+			
+		return "\nNo change has been made.\n"; 
+	}
+	
+	private void generateNewPlayer(String playerName)
+	{
+		Player newPlayer = new Player();
+		newPlayer.setName(playerName);
+		newPlayer.setHP(100);
+		newPlayer.setScore(0);
+		newPlayer.setRoomID(1);
+		GameController.setCurrentPlayer(newPlayer);
+		GameController.setCurrentRoom(getRoom(newPlayer, 1));
 	}
 	
 	public void storeVisited(Player player, Room room)
