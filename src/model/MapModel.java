@@ -503,7 +503,6 @@ public class MapModel
 		newPlayer.setName(playerName);
 		newPlayer.setHP(100);
 		newPlayer.setScore(0);
-		newPlayer.setPlayerID(1);
 		newPlayer.setRoomID(GameController.getCurrentPlayer().getPlayerID()); 
 		GameController.setCurrentRoom(getRoom(newPlayer, 1));
 	}
@@ -551,7 +550,6 @@ public class MapModel
 	public String storeInventoryItem(Player player, Room room, Item item)
 	{
 		Item [] inventory = player.getInventory();
-		System.out.println("PlayerID in Model: " + player.getPlayerID()); 
 		
 		// check to see if last inventory spot filled 
 		if(inventory[2] == null)
