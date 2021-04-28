@@ -420,7 +420,7 @@ public class MapModel
 				newPuzzle = new Puzzle(); 
 				newPuzzle.setPuzzleID(puzzleResult.getInt("PuzzleID"));
 				newPuzzle.setProblem(puzzleResult.getString("Prompt"));
-				newPuzzle.setAnswer(puzzleResult.getString("Answer"));
+				newPuzzle.setCorrectAnswer(puzzleResult.getString("Answer"));
 				newPuzzle.setTip(puzzleResult.getString("Tip"));
 				newPuzzle.setRoomID(puzzleResult.getInt("Location"));
 				newPuzzle.setSolved(puzzleResult.getBoolean("isCompleted"));
@@ -447,22 +447,25 @@ public class MapModel
 		Player newPlayer = new Player();
 		newPlayer.setName(playerName);
 		
-		// ITEMS_NEED_TO_BE_ADDED
 		try
 		{
 			newPlayer.setScore(profile.getInt("Score"));
-			newPlayer.setRoomID(profile.getInt("Location"));
+			newPlayer.setPlayerID(profile.getInt("PlayerID")); 
+			int location = profile.getInt("Location"); // Result closes if Location Column is fetched twice 
+			newPlayer.setRoomID(location);
 			newPlayer.setHP(profile.getInt("Health"));
-			GameController.setCurrentRoom(getRoom(newPlayer, profile.getInt("Location")));
+			newPlayer.setInventory(getItems(newPlayer, 1000));
+			
+			GameController.setCurrentRoom(getRoom(newPlayer, location));
 			
 		}catch(SQLException sqlErr)
 		{
-			// throw new Exception()
+			System.out.println(sqlErr.getMessage()); 
 		}
 		
 		GameController.setCurrentPlayer(newPlayer);
 				
-		return "\nThe player save has been loaded.\n"; 
+		return "\nThe player save, " + playerName + ", has been loaded.\n"; 
 	}
 	
 	public String newPlayerProfile(String playerName)
@@ -479,7 +482,7 @@ public class MapModel
 		// if profile does exist
 		Scanner overwriteParser = new Scanner(System.in); 
 		
-		System.out.println("\nThe player save already exists. Do you want to overwrite it?\n"); 
+		System.out.println("\nThe player save, " + playerName + " already exists. Do you want to overwrite it?\n"); 
 		String overwriteDecision = overwriteParser.nextLine(); 
 		
 		if(overwriteDecision.equalsIgnoreCase("yes"))
@@ -488,7 +491,7 @@ public class MapModel
 			gameDB.newProfile(playerName);
 			generateNewPlayer(playerName); 
 			
-			return "\nThe player save was overwritten. A new game is being started. \n"; 
+			return "\nThe player save was, " + playerName + "overwritten. A new game is being started. \n"; 
 		}
 			
 		return "\nNo change has been made.\n"; 
@@ -496,37 +499,92 @@ public class MapModel
 	
 	private void generateNewPlayer(String playerName)
 	{
-		Player newPlayer = new Player();
+		Player newPlayer = GameController.getCurrentPlayer();
 		newPlayer.setName(playerName);
 		newPlayer.setHP(100);
 		newPlayer.setScore(0);
-		newPlayer.setRoomID(1);
-		GameController.setCurrentPlayer(newPlayer);
+		newPlayer.setPlayerID(1);
+		newPlayer.setRoomID(GameController.getCurrentPlayer().getPlayerID()); 
 		GameController.setCurrentRoom(getRoom(newPlayer, 1));
+	}
+	
+	public void storePlayerHealth(Player player, int health)
+	{
+		gameDB.saveHealth(player, health);
+	}
+	
+	public void storePlayerScore(Player player, int score)
+	{
+		gameDB.saveScore(player, score);
+	}
+	
+	public void storePlayerCurrentRoom(Player player, Room room)
+	{
+		gameDB.saveCurrentRoom(player, room);
 	}
 	
 	public void storeVisited(Player player, Room room)
 	{
-		
+		gameDB.saveVisited(player, room); 
 	}
 	
 	public void storeSolved(Player player, Puzzle puzzle)
 	{
-		
+		gameDB.saveSolved(player, puzzle);
 	}
 	
 	public void storeDefeated(Player player, Monster monster)
 	{
-		
+		gameDB.saveDefeat(player, monster);
 	}
 	
-	public void storeRoomItem(Player player, Room room, Item item)
+	public String storeRoomItem(Player player, Room room, Item item)
 	{
+		gameDB.saveRoomItem(player, room, item); 
+		item.setRoomID(room.getRoomID());
+		player.removeItem(item);
+		room.addItem(item);
 		
+		return "\nYou have dropped " + item.getItemName() + " in " + room.getName() + ".\n"; 
 	}
 	
-	public void storeInventoryItem(Player player, Room room, Item item)
+	public String storeInventoryItem(Player player, Room room, Item item)
 	{
+		Item [] inventory = player.getInventory();
+		System.out.println("PlayerID in Model: " + player.getPlayerID()); 
 		
+		// check to see if last inventory spot filled 
+		if(inventory[2] == null)
+		{
+			player.addItem(item);
+			item.setRoomID(1000);
+			room.removeItem(item);
+			gameDB.saveInventoryItem(player, room, item);
+			return "\nAdding " + item.getItemName() + "to inventory...\n"; 
+		}
+		
+		System.out.println("\nYour inventory is full, what item do you want to swap it with?\n");
+		System.out.println(player.printInventory()); 
+		
+		Scanner itemParser = new Scanner(System.in); 
+		String itemOverflowOption = itemParser.nextLine(); 
+			
+		for(Item slot: inventory)
+		{
+			if(itemOverflowOption.equalsIgnoreCase(item.getItemName()))
+			{
+				gameDB.saveInventoryItem(player, room, item); 
+				
+				player.removeItem(slot);
+				slot.setRoomID(room.getRoomID());
+				room.addItem(slot);
+				item.setRoomID(1000);
+				player.addItem(item); 
+				
+				return "\n" + slot.getItemName() + " has been swapped with " + item.getItemName() + " and dropped here.\n"; 
+			}
+		}
+		
+		return "Item not found in inventory. Exiting";
 	}
 }
