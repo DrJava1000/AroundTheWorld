@@ -50,7 +50,7 @@ NORTH 8
 Orlando Room 2 
 You get brought into the next room and immediately smell the strong aroma of fish. You know that Orlando is close to the beach, but that is not any reason for it to smell so much like the ocean. You then notice a massive tank filled with two Orca whales. You are at Sea World? Personally, you do not agree with Sea Worlds treatment of their animals, so you decide that it is time to leave. You then notice an open portal that will take you to the next location. Type EAST to go into the next room, or type SOUTH to go back to the previous room.
 ----
-EAST 8
+EAST 9
 SOUTH 6
 ----
 9
@@ -181,10 +181,17 @@ EAST 27
 ----
 27
 Hong Kong Room 1 
-You are blasted into the next room. You open your eyes and find yourself in the presence of a river. You are in Hong Kong and you are at the Pearl River. This place has history. The buildings are very historic. There is a door to the next open portal that will take you to the next location. Type WEST to go into the next room, or type SOUTH to go back to the previous room.
+You are blasted into the next room. You open your eyes and find yourself in the presence of a river. You are in Hong Kong and you are at the Pearl River. This place has history. The buildings are very historic. There is a door to the next open portal that will take you to the next location.
 ----
 NORTH 28
 WEST 26
+----
+28
+Hong Kong Room 2
+You are blasted into the next room. This place is nice, but you might not come here again. Maybe we should leave. It’s not that much here, but historical buildings and impressive skylines. There is a portal that is opening to take you to your next location.
+----
+SOUTH 27
+EAST 29
 ----
 29
 Cairo Room 1 

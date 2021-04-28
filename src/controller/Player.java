@@ -115,21 +115,22 @@ public class Player
 	/**
 	 * @return the healthPoints
 	 */
-	public int getHP() {
+	public int getHP() 
+	{
 		return hp;
 	}
-
+	
 	/**
 	 * @param healthPoints the healthPoints to set
 	 */
 	public void setHP(int healthPoints) 
 	{
-		this.hp = healthPoints;
+		hp = healthPoints;
 	}
 	
-	public void storeHP(int healthPoints)
+	public void updateHP(int healthPoints)
 	{
-		setHP(healthPoints); 
+		hp = hp + healthPoints; 
 		GameController.getMap().storePlayerHealth(this, healthPoints);
 	}
 
@@ -141,39 +142,41 @@ public class Player
 	public void updateScore(int score) 
 	{
 		playerScore = playerScore + score; 
-		storeScore(playerScore); 
+		GameController.getMap().storePlayerScore(this, score);
 	}
 
-	public void setScore(int score) {
+	public void setScore(int score) 
+	{
 		playerScore = score;
 	}
-	
-	public void storeScore(int score)
-	{
-		GameController.getMap().storePlayerHealth(this, score);
-	}
 
-	public int getRoomID() {
+	public int getRoomID() 
+	{
 		return roomID;
 	}
 
-	public void setRoomID(int roomID) {
+	public void setRoomID(int roomID) 
+	{
 		this.roomID = roomID;
 	}
 
-	public String getName() {
+	public String getName() 
+	{
 		return name;
 	}
 
-	public void setName(String name) {
+	public void setName(String name) 
+	{
 		this.name = name;
 	}
 
-	public int getPlayerID() {
+	public int getPlayerID() 
+	{
 		return playerID;
 	}
 
-	public void setPlayerID(int playerID) {
+	public void setPlayerID(int playerID) 
+	{
 		this.playerID = playerID;
 	}
 }

@@ -63,8 +63,11 @@ public class Adventure
 		
 		while(true)
 		{	
-			if(displayRoom) // display room
+			if(displayRoom) 
+			{   // display room
 				System.out.println(currentRoom.display()); 
+				displayRoom = false; 
+			}
 
 			if(displayMenu) // display game menu
 			{
