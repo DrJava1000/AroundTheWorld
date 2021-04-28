@@ -17,8 +17,7 @@ import gameExceptions.InvalidRoomException;
  * 
  * This class is the main class. It contains the game loop
  * responsible for obtaining user input and passing it to the game controller 
- * for processing. It also manages the map's current room and it is responsible for all 
- * exception handling. 
+ * for processing. 
  */
 public class Adventure 
 {
@@ -30,7 +29,7 @@ public class Adventure
 
 	/** Constructor: Adventure
 	 * 
-	 * The Adventure constructor initializes the scanner for user input
+	 * The Adventure constructor initializes the scanner for command input
 	 * and it creates the game controller. 
 	 */
 	public Adventure()
@@ -64,38 +63,38 @@ public class Adventure
 		
 		while(true)
 		{	
-			if(displayRoom)
+			if(displayRoom) // display room
 				System.out.println(currentRoom.display()); 
 
-			if(displayMenu)
+			if(displayMenu) // display game menu
 			{
 				System.out.println("Around The World \n");
 				System.out.println("New Game (new [PlayerName]), Load (load [PlayerName]) , or Exit (exit)"); 
-				
-		    // displayStatus = false; 
 			}else
 			{
 				if(!currentRoom.isVisited())
-				currentRoom.setVisited(true);
+					currentRoom.setVisited(true);
 
+				// display monster if one available
 				if(currentRoom.getMonster()!=null) 
 				{
 					if(!currentRoom.getMonster().isDefeated()) 
 					{
-						System.out.println(currentRoom.getMonster().getMonsterDescription());
+						System.out.println("\nMONSTER_INCOMING: " + currentRoom.getMonster().getMonsterDescription() + "\n");
 					}
 				}
 
+				// display puzzle if one available
 				if(currentRoom.getPuzzle()!=null)
 				{
 					if(!currentRoom.getPuzzle().isSolved())
 					{
-						System.out.println(currentRoom.getPuzzle().getProblem());
+						System.out.println("\nPUZZLE_INCOMING: " + currentRoom.getPuzzle().getProblem() + "\n");
 					}
 				}
 		    }
 
-			System.out.print("\nWhat do you want to do?: "); 
+			System.out.print("\nEnter Here: "); 
 			command = commandParser.nextLine(); 
 
 			String response;
@@ -117,16 +116,16 @@ public class Adventure
 		}
 	}
 
-	/** Method: setRoom
-	 * 
-	 * This method is used to change the player's current room. 
-	 * @param Room the new Room to set as the current
-	 */
 	public static void setRoom(Room room)
 	{
 		currentRoom = room; 
 		displayRoom = true; 
 		displayMenu = false; 
+	}
+	
+	public static Room getRoom()
+	{
+		return currentRoom; 
 	}
 	
 	public static boolean getDisplayMenuStatus()
