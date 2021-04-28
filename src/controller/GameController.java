@@ -44,19 +44,6 @@ public class GameController
 		return map;
 	}
 	
-	/** Method: retrieveByID
-	  * 
-	  * This method acts as a wrapper for the method getRoom() in the MapModel class. 
-	  * It gets the Room associated with an ID. If not possible, it creates a new
-	  * Room with that id and passes it. 
-	  * @param curRoom the ID for the room that is to be retrieved
-	  * @return a Room containing that id
-	  */
-	public Room retrieveByID(int curRoom)
-	{
-		return map.getRoom(currentPlayer, curRoom); 
-	}
-	
 	/** Method: executeCommand
 	  * 
 	  * This method passes user commands to the commands manager. 
@@ -82,6 +69,8 @@ public class GameController
 	
 	public static void setCurrentRoom(Room room)
 	{
+		Adventure.getRoom().storeVisited(currentPlayer);
 		Adventure.setRoom(room);
+		map.storePlayerCurrentRoom(currentPlayer, room);
 	}
 }

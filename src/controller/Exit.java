@@ -97,7 +97,7 @@ public class Exit
 	  * 
 	  * This method is a wrapper for getDirection(). 
 	  * 
-	  * @return a string containing the exit's direction in all uppercases 
+	  * @return a string containing the exit's direction in all upper case 
 	  */
 	public String toString()
 	{

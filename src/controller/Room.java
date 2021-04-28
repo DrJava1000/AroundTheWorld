@@ -17,7 +17,7 @@ public class Room
 	private ArrayList<Exit> roomExits = new ArrayList<Exit>(); 
 	private ArrayList<Item> roomItems = new ArrayList<Item>();
 	private boolean visitedStatus; 
-	private Puzzle puzzle;
+	private Puzzle puzzle; // a puzzle if one exist in the room 
 	private Monster monster;
 	
 	/** Constructor: Room
@@ -63,7 +63,7 @@ public class Room
 	  * 
 	  * This method gets a list of all of a room's exits in a clean and organized format.
 	  * This method is used to tell the user what exits are allowed in any given room. 
-	  * @return a single formatted string with all room exits
+	  * @return a single formatted string with all of a room's exits
 	  */
 	public String displayExits()
 	{
@@ -84,15 +84,14 @@ public class Room
 	  * 
 	  * This method gets a list of all of a room's properties in a clean and organized format.
 	  * 
-	  * @return the Julian day number that begins at noon of the
-	  * given calendar date.
+	  * @return a single formatted string with all of a room's properties
 	  */
 	public String displayItems()
 	{
 		String availableItems = "\n\nThe following items are in this room: "; 
 		
 		if(roomItems.size() == 0)
-			return display() + "\n\nThere are no items in this room."; 
+			return display() + "\n\nThere are no items in this room.\n"; 
 		
 		for(int i = 0; i < roomItems.size(); i++)
 		{
@@ -115,7 +114,7 @@ public class Room
 		return displayItems(); 
 	}
 	
-	/** Method: addName
+	/** Method: addItem
 	  * 
 	  * This method adds an item to a room. 
 	  * @param item a reference to the item to be added to a room
@@ -216,7 +215,7 @@ public class Room
 	  * into a single description for the room. 
 	  * @param descArr a collection of Strings (or lines) that make up a description
 	  */
-	/*public void buildDescription(ArrayList<String> descArr)
+	public void buildDescription(ArrayList<String> descArr)
 	{
 		description = ""; 
 		
@@ -224,7 +223,7 @@ public class Room
 		{
 			description += line + "\n";  
 		}
-	} */ 
+	} 
 	
 	/** Method: getDescription
 	  * 
@@ -311,7 +310,8 @@ public class Room
 	  * Get a puzzle within a room or null if it doesn't exist 
 	  * @return a puzzle within the room 
 	  */
-	public Puzzle getPuzzle() {
+	public Puzzle getPuzzle() 
+	{
 		return puzzle;
 	}
 
@@ -320,7 +320,8 @@ public class Room
 	  * Add a puzzle to a room. 
 	  * @parameter puzzle a puzzle to add to a room 
 	  */
-	public void setPuzzle(Puzzle p) {
+	public void setPuzzle(Puzzle p) 
+	{
 		puzzle = p;
 	}
 
@@ -329,7 +330,8 @@ public class Room
 	  * Get a monster within a room or null if it doesn't exist 
 	  * @return monster the monster within the room 
 	  */
-	public Monster getMonster() {
+	public Monster getMonster() 
+	{
 		return monster;
 	}
 
@@ -338,8 +340,9 @@ public class Room
 	  * Add a monster to the room. 
 	  * @parameter monster the monster to add to the room 
 	  */
-	public void setMonster(Monster monst) {
-		monster = monst;
+	public void setMonster(Monster m) 
+	{
+		monster = m;
 	}
 
 	/** Method: toString
