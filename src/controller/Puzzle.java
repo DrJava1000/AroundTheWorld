@@ -1,25 +1,24 @@
-/**	Class: Puzzle
- * @author Ashley
- * @version 1
- * Course: ITEC 3860 Spring 2021
- * Written: Apr 23, 2021
- *
- * This class - creates the Object Puzzle.
- *
- * Purpose - to be read from the Model.
- */
 package controller;
 
-
+/**Class: Puzzle 
+ * 
+ * Course: ITEC 3860 Spring 2021
+ * 
+ * 
+ * This class is the puzzle class. It represents a puzzle in
+ * Around the World. 
+*/
 public class Puzzle 
 {
 	private int puzzleID;
 	private String problem;
 	private String answer;
 	private String tip;
-	private boolean isSolved;
+	private boolean isSolved; // whether puzzle is solved or not
 	private int roomID; 
-	public static final String WRONG_ANSWER = "The answer to the question was incorrect, all of a sudden you feel your life drain a bit. "
+	// Wrong answer text when a person gets the question wrong. 
+	public static final String WRONG_ANSWER = "The answer to the question was incorrect, "
+			+ "all of a sudden you feel your life drain a bit. "
 			+ "You lost 5 health points.";
 	
 	/**
@@ -49,17 +48,18 @@ public class Puzzle
 	/**
 	 * @param isSolved the isSolved to set
 	 */
-	public void setSolved(boolean isSolved) 
+	public void setSolved(boolean solved) 
 	{
-		this.isSolved = isSolved;
+		isSolved = solved;
 	}
 	
 	/** Method: storeSolved
 	  * 
 	  * This method stores the fact that the current Player has solved this puzzle. 
 	  */
-	public void storeVisited(Player player)
+	public void saveSolved(Player player)
 	{
+		setSolved(true); 
 		GameController.getMap().storeSolved(player, this);
 	}
 
@@ -77,22 +77,6 @@ public class Puzzle
 	public void setProblem(String problem) 
 	{
 		this.problem = problem;
-	}
-
-	/**
-	 * @return the answer
-	 */
-	public String getAnswer()
-	{
-		return answer;
-	}
-
-	/**
-	 * @param answer the answer to set
-	 */
-	public void setAnswer(String answer) 
-	{
-		this.answer = answer;
 	}
 
 	/**
@@ -127,12 +111,14 @@ public class Puzzle
 		answer = ans;
 	}
 
-	public int getRoomID() {
+	public int getRoomID() 
+	{
 		return roomID;
 	}
 
-	public void setRoomID(int roomID) {
-		this.roomID = roomID;
+	public void setRoomID(int id) 
+	{
+		roomID = id;
 	}
 	
 }

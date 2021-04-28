@@ -1,25 +1,23 @@
 package controller;
 
 /**	Class: Monster
- * @author Ashley
- * @version 1
+ * 
  * Course: ITEC 3860 Spring 2021
- * Written: Apr 23, 2021
+ * 
  *
- * This class - Creates the object Monster. 
- *
- * Purpose - to be read from the Model
+ * This class encapsulates the functionality of a Monster in 
+ * Around the World. 
  */
 public class Monster 
 {
 	private int monsterID;
 	private String monsterName;
 	private String monsterDescription;
-	private int rightItemChoice;
+	private int rightItemChoice; // item id of right item to use 
 	private String tip;
 	private boolean defeated;
-	private String wrongChoice;
-	private String rightChoice;
+	private String wrongChoice; // text when wrong item is used 
+	private String rightChoice; // text when right item is used 
 	private int roomID; 
 	
 	public int getMonsterID() 
@@ -27,145 +25,99 @@ public class Monster
 		return monsterID;
 	}
 
-	public void setMonsterID(int monsterID) 
+	public void setMonsterID(int id) 
 	{
-		this.monsterID = monsterID;
+		monsterID = id;
 	}
-	
 	
 	public String getMonsterName() 
 	{
 		return monsterName;
 	}
 
-
-
-	public void setMonsterName(String monsterName) 
+	public void setMonsterName(String name) 
 	{
-		this.monsterName = monsterName;
+		monsterName = name;
 	}
-
-
 
 	public String getMonsterDescription() 
 	{
 		return monsterDescription;
 	}
 
-
-
-	public void setMonsterDescription(String monsterDescription) 
+	public void setMonsterDescription(String description) 
 	{
-		this.monsterDescription = monsterDescription;
+		monsterDescription = description;
 	}
 
-
-	/**
-	 * @return the tip
-	 */
 	public String getTip()
 	{
 		return tip;
 	}
 
-	/**
-	 * @param tip the tip to set
-	 */
-	public void setTip(String tip) 
+	public void setTip(String t) 
 	{
-		this.tip = tip;
+		tip = t;
 	}
 
 	/** Method: storeDefeated
 	  * 
-	  * This method stores the fact that the current Player has defeated this monster. 
+	  * This method stores a monster's defeat in the database for a specific player. 
+	  * @parameter player the current player to link the Monster's defeat too
 	  */
-	public void storeDefeated(Player player)
+	public void saveDefeated(Player player)
 	{
+		setDefeated(true); 
 		GameController.getMap().storeDefeated(player, this);
 	}
 
-	/**
-	 * @return the defeated
-	 */
 	public boolean isDefeated() 
 	{
 		return defeated;
 	}
 
-	/**
-	 * @param defeated the defeated to set
-	 */
-	public void setDefeated(boolean defeated) 
+	public void setDefeated(boolean defeat) 
 	{
-		this.defeated = defeated;
+		defeated = defeat;
 	}
 
-
-
-	/**
-	 * @return the wrongChoice
-	 */
 	public String getWrongChoice() 
 	{
 		return wrongChoice;
 	}
 
-
-
-	/**
-	 * @param i the wrongChoice to set
-	 */
-	public void setWrongChoice(String i) 
+	public void setWrongChoice(String wChoice) 
 	{
-		this.wrongChoice = i;
+		wrongChoice = wChoice;
+	}
+	
+	public void setRightChoice(String rChoice) 
+	{
+		rightChoice = rChoice;
 	}
 
-
-
-	/**
-	 * @return the rightChoice
-	 */
 	public String getRightChoice() 
 	{
 		return rightChoice;
 	}
 
-
-
-	/**
-	 * @param rightChoice the rightChoice to set
-	 */
-	public void setRightChoice(String rightChoice) 
-	{
-		this.rightChoice = rightChoice;
-	}
-
-
-
-	/**
-	 * @return the rightItemChoice
-	 */
 	public int getRightItemChoice() 
 	{
 		return rightItemChoice;
 	}
 
-
-
-	/**
-	 * @param rightItemChoice the rightItemChoice to set
-	 */
-	public void setRightItemChoice(int rightItemChoice) 
+	public void setRightItemChoice(int itemChoice) 
 	{
-		this.rightItemChoice = rightItemChoice;
+		rightItemChoice = itemChoice;
 	}
 
-	public int getRoomID() {
+	public int getRoomID() 
+	{
 		return roomID;
 	}
 
-	public void setRoomID(int roomID) {
-		this.roomID = roomID;
+	public void setRoomID(int id) 
+	{
+		roomID = id;
 	}
 }
