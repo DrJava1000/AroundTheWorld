@@ -11,10 +11,11 @@ import java.util.ArrayList;
 */
 public class Player 
 { 
+	private int playerID; 
 	private int hp;
 	private String name; 
-	private int score; 
-	private ArrayList<Item> inventory; // contains a list of roomIDs 
+	private int playerScore; 
+	private Item[] inventory; // contains a list of roomIDs 
 	private int roomID; 
 	
 	/** Constructor: Player
@@ -23,7 +24,7 @@ public class Player
 	  */
 	public Player()
 	{
-		inventory = new ArrayList<Item>(); 
+		inventory = new Item[3]; 
 	}
 	
 	/** Method: addItem
@@ -33,7 +34,14 @@ public class Player
 	  */
 	public void addItem(Item item)
 	{
-		inventory.add(item); 
+		for(int i = 0; i < inventory.length; i++)
+		{
+			if(inventory[i] == null)
+			{
+				inventory[i] = item; 
+				break; 
+			}
+		}
 	}
 
 	/** Method: removeItem
@@ -43,11 +51,12 @@ public class Player
 	  */
 	public void removeItem(Item item)
 	{
-		for(int i = 0; i < inventory.size(); i++)
+		for(int i = 0; i < inventory.length; i++)
 		{
-			if(inventory.get(i).getItemName().equals(item.getItemName()))
+			if(inventory[i].getItemName().equals(item.getItemName()))
 			{
-				inventory.remove(i); 
+				inventory[i] = null;
+				break; 
 			}
 		}
 	}
@@ -59,21 +68,38 @@ public class Player
 	  */
 	public String printInventory()
 	{
-		if(inventory.size() == 0)
+		// check for empty inventory 
+		if(inventory[0] == null)
 		{
 			return "\nYou don't have anything in your inventory.\n"; 
 		}
 		
 		String inventoryStr = "\nIn your inventory, you have ";
-		for(int i = 0; i < inventory.size(); i++)
+		for(int i = 0; i < inventory.length; i++)
 		{
-			if(i == (inventory.size() - 1))
-				inventoryStr += inventory.get(i).getItemName() + ".\n"; 
+			String response; 
+			if(inventory[i] == null)
+				response = "Empty Slot"; 
+			else 
+				response = inventory[i].getItemName(); 
+			
+			if(i == (inventory.length - 1))
+				inventoryStr += response + ".\n"; 
 			else
-				inventoryStr += inventory.get(i).getItemName() + ", "; 
+				inventoryStr += response + ", "; 
 		}
 		
 		return inventoryStr; 
+	}
+	
+	public void setInventory(ArrayList<Item> items)
+	{
+		int index = 0; 
+		for(Item currentItem : items)
+		{
+			inventory[index] = currentItem; 
+			index++; 
+		}
 	}
 	
 	/** Method: getInventory
@@ -81,7 +107,7 @@ public class Player
 	  * Gte the player's inventory as a collection. 
 	  * @return a reference to the player's inventory
 	  */
-	public ArrayList<Item> getInventory()
+	public Item[] getInventory()
 	{
 		return inventory; 
 	}
@@ -96,16 +122,35 @@ public class Player
 	/**
 	 * @param healthPoints the healthPoints to set
 	 */
-	public void setHP(int healthPoints) {
+	public void setHP(int healthPoints) 
+	{
 		this.hp = healthPoints;
 	}
+	
+	public void storeHP(int healthPoints)
+	{
+		setHP(healthPoints); 
+		GameController.getMap().storePlayerHealth(this, healthPoints);
+	}
 
-	public int getScore() {
-		return score;
+	public int getScore() 
+	{
+		return playerScore;
+	}
+	
+	public void updateScore(int score) 
+	{
+		playerScore = playerScore + score; 
+		storeScore(playerScore); 
 	}
 
 	public void setScore(int score) {
-		this.score = score;
+		playerScore = score;
+	}
+	
+	public void storeScore(int score)
+	{
+		GameController.getMap().storePlayerHealth(this, score);
 	}
 
 	public int getRoomID() {
@@ -122,5 +167,13 @@ public class Player
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public int getPlayerID() {
+		return playerID;
+	}
+
+	public void setPlayerID(int playerID) {
+		this.playerID = playerID;
 	}
 }
