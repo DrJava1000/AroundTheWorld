@@ -19,7 +19,7 @@ public class Puzzle
 	// Wrong answer text when a person gets the question wrong. 
 	public static final String WRONG_ANSWER = "The answer to the question was incorrect, "
 			+ "all of a sudden you feel your life drain a bit. "
-			+ "You lost 5 health points.";
+			+ "You lost 10 health points.";
 	
 	/**
 	 * @return the puzzleID

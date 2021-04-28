@@ -88,7 +88,7 @@ public class Room
 	  */
 	public String displayItems()
 	{
-		String availableItems = "\n\nThe following items are in this room: "; 
+		String availableItems = "\n\nThe following items are in this room: \n"; 
 		
 		if(roomItems.size() == 0)
 			return display() + "\n\nThere are no items in this room.\n"; 
