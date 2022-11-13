@@ -1,0 +1,208 @@
+1
+Atlanta Room 1 
+Woah-that portal is quick! You look around at your surroundings, but you do not know where you are. You start to notice a place called the World of Coca-Cola. You then remember that your best friend visited this attraction when she went on vacation toATLANTA! You are in Atlanta. Huh, well that is not the first place I would have visited, but I guess it is a pretty normal start. You notice an open portal that will take you to the next location. Type SOUTH to go into the next room.
+----
+SOUTH 2
+----
+2
+Atlanta Room 2 
+Alright, so you are at the second location, but it is still Atlanta. I guess it would not hurt to keep looking around the city. You continue walking around, and you notice a restaurant called The Varsity. The smell of chili and onion rings entices you, but the place looks packed and you do not have any time to waste. You then notice that there is a puzzle to complete-
+----
+EAST 3
+NORTH 1
+----
+3
+Rome Room 1 
+You get blasted into the next location, but you are definitely not in Atlanta anymore. The Leaning Tower of Pisa? You are in Rome! You then notice that there is an available potion to pick up-
+----
+NORTH 4
+WEST 2
+----
+4
+Rome Room 2
+You are teleported into the next room and immediately smell the aroma of pizza. Gosh! Why are there so many temptations for unhealthy food choices at these locations? Since you smell pizza, you assume that you are still in Rome. You notice the pattern that there are two rooms in each city. Anyways, you then notice that there is a puzzle to complete-
+----
+EAST 5
+SOUTH 3
+----
+5
+Paris Room 1 
+You are brought into the next room and immediately notice that you are in the presence of The Eifel Tower! You have always wanted to come to Paris! You then notice that there is a monster to fight-
+----
+WEST 4
+SOUTH 6
+----
+6
+Paris Room 2 
+You get teleported into the next location and immediately notice that you are at the Le Louvre museum. You have always wanted to come to this museum. With paintings like the Mona Lisa and Liberty Leading the People, it is labeled as the most exquisite museum in the world! But, again, you do not have much time to waste. You then notice an open portal that will take you to the next location. Type EAST to go into the next room, or type NORTH to go back to the previous room.
+----
+EAST 7
+NORTH 5
+----
+7
+Orlando Room 1 
+You are teleported into the next room. Why does it overwhelmingly smell like churros? Also, is that Mickey Mouse in front of the Cinderella castle? Oh my gosh, you are at Disney World in Orlando! You have always wanted to go to Disney World I guess today really is your lucky day! You then notice that there is a puzzle to complete-
+----
+WEST 6
+NORTH 8
+----
+8
+Orlando Room 2 
+You get brought into the next room and immediately smell the strong aroma of fish. You know that Orlando is close to the beach, but that is not any reason for it to smell so much like the ocean. You then notice a massive tank filled with two Orca whales. You are at Sea World? Personally, you do not agree with Sea Worlds treatment of their animals, so you decide that it is time to leave. You then notice an open portal that will take you to the next location. Type EAST to go into the next room, or type SOUTH to go back to the previous room.
+----
+EAST 9
+SOUTH 6
+----
+9
+Mexico City Room 1 
+You are blasted into the next room and immediately trip and fall onto the ground. While lying on the ground, some dogs come to lick and sniff you. You love dogs, so maybe the fall was worth it. However, why are there so many stray dogs? You get up and notice that you are smack dab in the middle of the Zocalo plaza in Mexico City. Well that definitely explains all of the stray dogs. You then notice that there is a puzzle to complete-
+----
+WEST 8
+SOUTH 10
+----
+10
+Mexico City Room 2 
+You are teleported into the next location and know exactly where you are. All of the greenery and brightly colored buildings let you know that you are at the Frida Kahlo Museum. You have always wanted to come to this museum, so you are ecstatic! You then notice that there is an available weapon to pick up-
+----
+NORTH 9
+EAST 11
+----
+11
+Sydney Room 1 
+You are teleported into the next location and are placed right in front of a massive building with beautiful architecture. You then hear the beautiful sound of live opera and notice the accents of those around you. That is when you realize that you are at the Sydney Opera House! You then notice an open portal that will take you to the next location. Type SOUTH to go into the next room, or type WEST to go back to the previous room.
+----
+SOUTH 12
+WEST 10
+----
+12
+Sydney Room 2 
+You are brought into the next room and are immediately aware that you are at the Sydney Zoo. You have heard that there are so many different kinds of animals there, so you begin to explore around the zoo. You then notice that there is a monster to fight-
+----
+NORTH 11
+SOUTH 13
+----
+13
+Berlin Room 1 
+You are teleported into the next location and are shocked to find a massive wall standing right in front of you. You notice that the wall is covered in graffiti, and there are tons of tourists around you. Oh yeah, this is definitely the Berlin Wall Memorial. You then notice that there is a puzzle to complete-
+----
+SOUTH 14
+NORTH 12
+----
+14
+Berlin Room 2 
+You are teleported into the next location and are placed right in front of a huge nightclub. There are easily hundreds of people standing in line just to get into the club, but almost all of them get rejected and turned away. You know exactly where you areBerghain. You remember hearing online that Berghain is the hardest club to get accepted into in the whole world. You are not even going to try to get into this club, so you start walking away. You then notice an open portal that will take you to the next location. Type WEST to go into the next room, or type NORTH to go back to the previous room.
+----
+WEST 15
+NORTH 13
+----
+15
+Chicago Room 1 
+You get teleported into the next room and immediately notice a huge silver bean statue in front of you. Yeah, you are definitely at Millennium Park in Chicago. You have never really cared to visit this city, but it will not hurt to explore around. You then notice that there is an available potion to pick up-
+----
+EAST 14
+NORTH 16
+----
+16
+Chicago Room 2 
+You are blasted into the next room. You open your eyes and find yourself in the presence of bright lights, clubs, and the Chicago River. You ask a tourist where exactly you are, and they tell you that you are at the Chicago Riverwalk. You had never heard of this place before, but it certainly a beautiful sight to see. Maybe you misjudged this city too unfairly. You then notice that there is a puzzle to complete-
+----
+SOUTH 15
+WEST 17
+----
+17
+New York Room 1 
+You were teleported into the next room and do you hear all that loud noise, are those horns? Yelpyou are in the streets of New York! You might want to go visit some places here, but wait! Is that steam coming from the sewer? It is moving!
+----
+SOUTH 18
+EAST 16
+----
+18
+New York Room 2 
+You are blasted into the next room. You open your eyes and find yourself in the presence of an empty home. It is tiny, but cozy. You do not know this place or who is home, so you must go. Here you are outside of the home on the streets of New York City. It is still loud and you then you notice that there is a door to the next open portal that will take you to the next location. Type EAST to go into the next room, or type SOUTH to go back to the previous room.
+----
+NORTH 17
+WEST 19
+----
+19
+Tokyo Room 1 
+You are blasted into the next room. You are on the highest mountain in Japan. Look at all the beautiful buildings. This place is amazing, but it is time to get down. How do you get down? Just complete the puzzle and you shall be set free.
+----
+NORTH 20
+EAST 18
+----
+20
+Tokyo Room 2 
+You are blasted into the next room. Now that we are off that high mountain, let us go for a walk. As you go for a walk you notice you are in a wood-like area. How did you get here? Is that a weapon that we can use to protect ourselves during this time? Let us pick it up to keep safe.
+----
+SOUTH 19
+WEST 21
+----
+21
+Rio de Janeiro Room 1 
+You are blasted into the next room. How beautiful is this room? Look at all the colors. It is so nice here. What a beautiful sight. It is warm outside. The water from the beach is so beautiful. Yes, you are in Rio de Janeiro. Even though we are in Rio de Janeiro, we are at the capital of Rio de Janeiro.
+----
+SOUTH 22
+EAST 20
+----
+22
+Rio de Janeiro Room 2 
+You are blasted into the next room. You are on the beach walking around and enjoying the water. This is a great sight. There is a door on the beach? It is opening for your next portal. Type SOUTH to go into the next room, or type WEST to go back to the previous room.
+----
+NORTH 21
+WEST 23
+----
+23
+Moscow Room 1 
+You are blasted into the next room. You are in the woods. This is creepy and scary. Why are the trees moving like that? Is something out there? There is nothing out there. That was close. Wait! There is something out there. It is coming straight too you.
+----
+EAST 22
+SOUTH 24
+----
+24
+Moscow Room 2 
+You are blasted into the next room. There are no more trees. But it is colorful and bright at night. Am I in Moscow? How great is this! The buildings are beautiful at night. I love it here! Let us go into this room to see what it looks like. It is the next portal. Type WEST to go into the next room, or type EAST to go back to the previous room.
+----
+NORTH 23
+SOUTH 25
+----
+25
+San Francisco Room 1 
+You are blasted into the next room. The air is clean here. You are in San Francisco. Let us go look at the Golden Gate Bridge. You are at the bridge and then you notice that there is a door to the next open portal that will take you to the next location. Type EAST to go into the next room, or type WEST to go back to the previous room.
+----
+SOUTH 26
+NORTH 24
+----
+26
+San Francisco Room 2 
+You have been blasted into the next room. The atmosphere here is so great. Let us go eat. There is a restaurant with the famous Dungeness Crab. Let us go there. That was good and now it is time to get ready to transport to another room, but first, how do you look?
+----
+NORTH 25
+EAST 27
+----
+27
+Hong Kong Room 1 
+You are blasted into the next room. You open your eyes and find yourself in the presence of a river. You are in Hong Kong and you are at the Pearl River. This place has history. The buildings are very historic. There is a door to the next open portal that will take you to the next location.
+----
+NORTH 28
+WEST 26
+----
+28
+Hong Kong Room 2
+You are blasted into the next room. This place is nice, but you might not come here again. Maybe we should leave. It’s not that much here, but historical buildings and impressive skylines. There is a portal that is opening to take you to your next location.
+----
+SOUTH 27
+EAST 29
+----
+29
+Cairo Room 1 
+You have been teleported into another room. This room is for the historic and scientific people. This is a museum. How neat? This room will teach you a lot. There is something coming from around the corner. It is coming at us, with a distinct walk.
+----
+WEST 28
+SOUTH 30
+----
+30
+Cairo Room 2 
+You are blasted into the next room. It is dry here. It is a lot of dirt. There are museums everywhere. We are in Cairo. This place has a lot of pyramids. Did you know that it is the capital of the Pyramids? Do you want to go back to the previous room? If so, type EAST to go back to the previous room.
+----
+NORTH 29
+----

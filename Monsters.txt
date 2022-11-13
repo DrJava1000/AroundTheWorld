@@ -1,0 +1,40 @@
+1
+Bear
+A huge white Russian bear appears. It terrorizes the village for years.
+It is dangerous to fight him in close-range. The Japanese shotgun could defeat him.
+1
+Wrong choice, they bear runs to you and slashes you with his claw. Health: -10
+You take out the shotgun and shoot, you miss, but scare away the Russian bear. You see him run away into the distance. Score +10
+23
+2
+Mummy
+A 3000-year-old mummy appears. Melee attacks cannot kill him. He can reattach the linen to protect his body.
+Use the flamethrower you saw in San Francisco.
+2
+Wrong choice, the Mummy seem to be unharmed and hits you with his sturdy linen. Health: -10
+You take out the flamethrower and shoot, after a couple seconds you stop and just see a pile of ash on the ground. Score +10
+29
+3
+Wizard
+A wizard who can neutralize any physical attacks by his magic appears.
+The anti-spell potion you got in Rome might work.
+4
+Wrong choice, the wizard is unharmed and throws a small fire spell to you. Health: -10
+You take and throw the anti-spell potion at the wizard, the wizard tries to cast magic but fails, does not know what to do but run away. Score +10
+5
+4
+Sewage Monster
+A sewage monster that escaped from a lab appears. It lives in the sewage system under the city. He gets his strength from the toxic sewage.
+Try the purifying potion you picked up in Chicago.
+5
+Wrong choice, the sewage monster is unharmed and spits sewage at you. Health: -10
+You take and throw the purifying potion at the sewage monster; you see the sewage dissolve back into the rest and flows away. Score +10
+17
+5
+Crocodile
+A giant crocodile that eats anyone who tries to cross the river appears.
+Remember that sword that you saw in Mexico City?
+3
+Wrong choice, the crocodile is unharmed and slaps you with his tail. Health: -10
+You take out the sword, you notice something the crocodile seem worried, you slash the sword, and the crocodile runs back into the water and you see him no longer. Score +10
+12
